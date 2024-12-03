@@ -39,6 +39,7 @@ class SocialMediaApp extends ConsumerWidget {
       
       // Debugging banner
       debugShowCheckedModeBanner: false,
+      
     );
   }
 }

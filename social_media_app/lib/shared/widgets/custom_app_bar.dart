@@ -1,70 +1,51 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final VoidCallback onMenuPressed;
-  final double height;
+  final TabController tabController;
+  final List<String> tabs;
+  final VoidCallback onReorder;
 
   const CustomAppBar({
     super.key,
-    required this.title,
-    required this.onMenuPressed,
-    this.height = kToolbarHeight,
+    required this.tabController,
+    required this.tabs,
+    required this.onReorder,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      color: Theme.of(context).primaryColor,
-      child: Row(
-        children: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
-            onPressed: onMenuPressed,
-          ),
-          Expanded(
-            child: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    margin: const EdgeInsets.only(right: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withAlpha(20),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.logo_dev,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          // Add a placeholder widget with the same width as the menu button
-          // to maintain center alignment
-          const SizedBox(width: 24),
-        ],
+    return AppBar(
+      backgroundColor: Theme.of(context).colorScheme.surface.withAlpha(80),
+      centerTitle: true,
+      title: const Text(
+        'OMNIVERSIFY',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 2,
+        ),
+      ),
+      leading: Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        ),
+      ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.reorder),
+          onPressed: onReorder,
+          tooltip: 'Reorder tabs',
+        ),
+      ],
+      bottom: TabBar(
+        controller: tabController,
+        isScrollable: true,
+        tabs: tabs.map((tab) => Tab(text: tab.toUpperCase())).toList(),
       ),
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(height);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + kTextTabBarHeight);
 }

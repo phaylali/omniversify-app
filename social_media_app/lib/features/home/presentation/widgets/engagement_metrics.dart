@@ -22,7 +22,6 @@ class EngagementMetrics extends StatelessWidget {
   Widget build(BuildContext context) {
     final totalVotes = likes + dislikes;
     final percentage = totalVotes > 0 ? (likes / totalVotes * 100).round() : 0;
-    final primaryColor = Theme.of(context).primaryColor;
 
     return Column(
       children: [
@@ -82,28 +81,27 @@ class EngagementMetrics extends StatelessWidget {
               _buildEngagementButton(
                 icon: _buildAuraIcon(true),
                 count: likes,
-                onPressed: () {},
+                onPressed: () {}, context: context,
               ),
               _buildEngagementButton(
                 icon: _buildAuraIcon(false),
                 count: dislikes,
-                onPressed: () {},
+                onPressed: () {}, context: context,
               ),
               _buildEngagementButton(
-                icon: const Icon(Icons.mode_comment_outlined, size: 20),
+                icon: const Icon(Icons.mode_comment_outlined),
                 count: commentsCount,
-                onPressed: () {},
+                onPressed: () {}, context: context,
               ),
               _buildEngagementButton(
-                icon: const Icon(Icons.repeat, size: 20),
+                icon: const Icon(Icons.repeat),
                 count: repostsCount + quotesCount,
-                onPressed: () {},
+                onPressed: () {}, context: context,
               ),
               _buildEngagementButton(
-                icon:  Icon(Icons.share_outlined, size: 20, color: primaryColor,),
+                icon: const Icon(Icons.share_outlined),
                 count: sharesCount,
-                onPressed: () {},
-                
+                onPressed: () {}, context: context,
               ),
             ],
           ),
@@ -118,7 +116,6 @@ class EngagementMetrics extends StatelessWidget {
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-       
       ),
     );
   }
@@ -127,6 +124,7 @@ class EngagementMetrics extends StatelessWidget {
     required Widget icon,
     required int count,
     required VoidCallback onPressed,
+    required BuildContext context,
   }) {
     return InkWell(
       onTap: onPressed,
@@ -136,8 +134,9 @@ class EngagementMetrics extends StatelessWidget {
         child: Column(
           children: [
             IconTheme(
-              data: const IconThemeData(
+              data: IconThemeData(
                 size: 20,
+                color: DefaultTextStyle.of(context).style.color,
               ),
               child: icon,
             ),
