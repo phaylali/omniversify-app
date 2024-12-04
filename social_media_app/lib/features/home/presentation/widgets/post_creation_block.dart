@@ -3,215 +3,293 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/localization/app_localizations.dart';
 import '../../../../shared/widgets/responsive_card_wrapper.dart';
 
-class PostCreationBlock extends ConsumerWidget {
-  const PostCreationBlock({super.key});
+class PostCreationBlock extends ConsumerStatefulWidget {
+  const PostCreationBlock({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState<PostCreationBlock> createState() => _PostCreationBlockState();
+}
+
+class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
+  final TextEditingController _textController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  bool _isExpanded = false;
+  final ScrollController _scrollController = ScrollController();
+  double _dragStartX = 0;
+  double _scrollStartPosition = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+    _textController.addListener(_onTextChange);
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_onFocusChange);
+    _textController.removeListener(_onTextChange);
+    _focusNode.dispose();
+    _textController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onFocusChange() {
+    if (!_focusNode.hasFocus && _textController.text.isEmpty) {
+      setState(() => _isExpanded = false);
+    }
+  }
+
+  void _onTextChange() {
+    if (_textController.text.isNotEmpty && !_isExpanded) {
+      setState(() => _isExpanded = true);
+    }
+  }
 
   Widget _buildAttachmentButton({
     required BuildContext context,
     required IconData icon,
     required String label,
     required VoidCallback onTap,
-    bool showLabel = true,
   }) {
-    final button = Padding(
-      padding: const EdgeInsets.only(right: 8),
-      child: Tooltip(
-        message: label,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(8),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: showLabel ? 12 : 8,
-              vertical: 8,
-            ),
-            decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: showLabel
-                ? Row(
-                    children: [
-                      Icon(icon, size: 20),
-                      const SizedBox(width: 8),
-                      Text(label),
-                    ],
-                  )
-                : Icon(icon, size: 20),
-          ),
+    return Tooltip(
+      message: label,
+      child: IconButton(
+        onPressed: onTap,
+        icon: Icon(icon, size: 20),
+        style: IconButton.styleFrom(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          padding: const EdgeInsets.all(12),
         ),
       ),
     );
-
-    return button;
   }
 
   Widget _buildPostButton({
     required BuildContext context,
     required String label,
-    required bool showLabel,
   }) {
-    if (showLabel) {
-      return ElevatedButton.icon(
-        onPressed: () {
-          // Handle post creation
-        },
-        icon: const Icon(Icons.send),
-        label: Text(label),
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24,
-            vertical: 12,
-          ),
-        ),
-      );
-    }
-
-    // Mobile version - icon only
-    return Tooltip(
-      message: label,
-      child: SizedBox(
-        width: 40,
-        height: 40,
-        child: ElevatedButton(
-          onPressed: () {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: Tooltip(
+        message: label,
+        child: IconButton(
+          onPressed: _textController.text.isEmpty ? null : () {
             // Handle post creation
+            _textController.clear();
+            setState(() => _isExpanded = false);
           },
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.zero,
-            shape: const CircleBorder(),
+          icon: const Icon(Icons.send, size: 20),
+          style: IconButton.styleFrom(
+            backgroundColor: Theme.of(context).primaryColor,
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.all(12),
+            disabledBackgroundColor: Theme.of(context).disabledColor,
           ),
-          child: const Icon(Icons.send, size: 20),
         ),
       ),
     );
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final localizer = ref.read(localizationProvider.notifier);
-    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return ResponsiveCardWrapper(
       child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 16.0),
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextField(
-                maxLines: 3,
-                decoration: InputDecoration(
-                  hintText: localizer.translate(context, 'whats_on_your_mind'),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none,
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: 80,
+                  maxHeight: screenHeight * 0.5,
+                ),
+                child: TextField(
+                  controller: _textController,
+                  focusNode: _focusNode,
+                  maxLines: null,
+                  textAlignVertical: TextAlignVertical.top,
+                  decoration: InputDecoration(
+                    hintText: localizer.translate(context, 'whats_on_your_mind'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).scaffoldBackgroundColor,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
-                  filled: true,
-                  fillColor: Theme.of(context).scaffoldBackgroundColor,
                 ),
               ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          _buildAttachmentButton(
-                            context: context,
-                            icon: Icons.image,
-                            label: localizer.translate(context, 'image'),
-                            onTap: () {
-                              // Handle image attachment
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                height: _isExpanded ? null : 0,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 8),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onPanStart: (details) {
+                              _dragStartX = details.localPosition.dx;
+                              _scrollStartPosition = _scrollController.offset;
                             },
-                            showLabel: !isSmallScreen,
-                          ),
-                          _buildAttachmentButton(
-                            context: context,
-                            icon: Icons.videocam,
-                            label: localizer.translate(context, 'video'),
-                            onTap: () {
-                              // Handle video attachment
+                            onPanUpdate: (details) {
+                              final dx = details.localPosition.dx - _dragStartX;
+                              final newOffset = _scrollStartPosition - dx;
+                              _scrollController.jumpTo(
+                                newOffset.clamp(
+                                  0,
+                                  _scrollController.position.maxScrollExtent,
+                                ),
+                              );
                             },
-                            showLabel: !isSmallScreen,
+                            child: SizedBox(
+                              height: 48,
+                              child: ListView(
+                                controller: _scrollController,
+                                scrollDirection: Axis.horizontal,
+                                physics: const NeverScrollableScrollPhysics(),
+                                children: [
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.image,
+                                    label: localizer.translate(context, 'image'),
+                                    onTap: () {
+                                      // Handle image attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.videocam,
+                                    label: localizer.translate(context, 'video'),
+                                    onTap: () {
+                                      // Handle video attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.book,
+                                    label: localizer.translate(context, 'book'),
+                                    onTap: () {
+                                      // Handle book attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.link,
+                                    label: localizer.translate(context, 'link'),
+                                    onTap: () {
+                                      // Handle link attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.gif,
+                                    label: localizer.translate(context, 'gif'),
+                                    onTap: () {
+                                      // Handle GIF attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.poll,
+                                    label: localizer.translate(context, 'poll'),
+                                    onTap: () {
+                                      // Handle poll creation
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.tv,
+                                    label: localizer.translate(context, 'series'),
+                                    onTap: () {
+                                      // Handle series attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.movie,
+                                    label: localizer.translate(context, 'movie'),
+                                    onTap: () {
+                                      // Handle movie attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.location_on,
+                                    label: localizer.translate(context, 'location'),
+                                    onTap: () {
+                                      // Handle location attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.music_note,
+                                    label: localizer.translate(context, 'music'),
+                                    onTap: () {
+                                      // Handle music attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.mic,
+                                    label: localizer.translate(context, 'audio'),
+                                    onTap: () {
+                                      // Handle audio attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.sports_esports,
+                                    label: localizer.translate(context, 'game'),
+                                    onTap: () {
+                                      // Handle game attachment
+                                    },
+                                  ),
+                                  const SizedBox(width: 2),
+                                  _buildAttachmentButton(
+                                    context: context,
+                                    icon: Icons.local_activity,
+                                    label: localizer.translate(context, 'activity'),
+                                    onTap: () {
+                                      // Handle activity attachment
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          _buildAttachmentButton(
-                            context: context,
-                            icon: Icons.book,
-                            label: localizer.translate(context, 'book'),
-                            onTap: () {
-                              // Handle book attachment
-                            },
-                            showLabel: !isSmallScreen,
-                          ),
-                          _buildAttachmentButton(
-                            context: context,
-                            icon: Icons.movie,
-                            label: localizer.translate(context, 'movie'),
-                            onTap: () {
-                              // Handle movie attachment
-                            },
-                            showLabel: !isSmallScreen,
-                          ),
-                          _buildAttachmentButton(
-                            context: context,
-                            icon: Icons.tv,
-                            label: localizer.translate(context, 'series'),
-                            onTap: () {
-                              // Handle series attachment
-                            },
-                            showLabel: !isSmallScreen,
-                          ),
-                          _buildAttachmentButton(
-                            context: context,
-                            icon: Icons.games,
-                            label: localizer.translate(context, 'game'),
-                            onTap: () {
-                              // Handle game attachment
-                            },
-                            showLabel: !isSmallScreen,
-                          ),
-                          _buildAttachmentButton(
-                            context: context,
-                            icon: Icons.mic,
-                            label: localizer.translate(context, 'audio'),
-                            onTap: () {
-                              // Handle audio attachment
-                            },
-                            showLabel: !isSmallScreen,
-                          ),
-                          _buildAttachmentButton(
-                            context: context,
-                            icon: Icons.music_note,
-                            label: localizer.translate(context, 'music'),
-                            onTap: () {
-                              // Handle music attachment
-                            },
-                            showLabel: !isSmallScreen,
-                          ),
-                          _buildAttachmentButton(
-                            context: context,
-                            icon: Icons.location_on,
-                            label: localizer.translate(context, 'location'),
-                            onTap: () {
-                              // Handle location attachment
-                            },
-                            showLabel: !isSmallScreen,
-                          ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(width: 8),
+                        _buildPostButton(
+                          context: context,
+                          label: localizer.translate(context, 'post'),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  _buildPostButton(
-                    context: context,
-                    label: localizer.translate(context, 'post'),
-                    showLabel: !isSmallScreen,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

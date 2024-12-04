@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TabController tabController;
-  final List<String> tabs;
+  final List<Widget> tabs;
   final VoidCallback onReorder;
 
   const CustomAppBar({
@@ -33,15 +33,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.reorder),
+          icon: const Icon(Icons.view_list),
           onPressed: onReorder,
-          tooltip: 'Reorder tabs',
+          tooltip: 'Manage tabs',
         ),
       ],
       bottom: TabBar(
         controller: tabController,
         isScrollable: true,
-        tabs: tabs.map((tab) => Tab(text: tab.toUpperCase())).toList(),
+        tabs: tabs,
       ),
     );
   }

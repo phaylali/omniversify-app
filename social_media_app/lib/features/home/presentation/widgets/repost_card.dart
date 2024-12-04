@@ -14,32 +14,66 @@ class RepostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveCardWrapper(
-      child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  const Icon(Icons.repeat, size: 16),
-                  const SizedBox(width: 8),
-                  Text(
-                    '${repost.author.displayName ?? repost.author.username} reposted',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
-                    ),
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.repeat,
+                        size: 14,
+                        color: Colors.yellow.shade300,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${repost.author.displayName ?? repost.author.username} reposted',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: Colors.yellow.shade300,
+                        ),
+                      ),
+                      const Spacer(),
+                      PopupMenuButton<String>(
+                        icon: const Icon(Icons.more_vert, color: Colors.grey),
+                        onSelected: (value) {
+                          switch (value) {
+                            case 'unfollow':
+                              // TODO: Implement unfollow functionality
+                              break;
+                            case 'block':
+                              // TODO: Implement block functionality
+                              break;
+                          }
+                        },
+                        itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                          const PopupMenuItem<String>(
+                            value: 'unfollow',
+                            child: Text('Unfollow'),
+                          ),
+                          const PopupMenuItem<String>(
+                            value: 'block',
+                            child: Text('Block'),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                EmbeddedCard(
+                  post: repost.originalPost,
+                ),
+                const Divider(height: 1),
+              ],
             ),
-            EmbeddedCard(
-              post: repost.originalPost,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

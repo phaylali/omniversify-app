@@ -3,47 +3,74 @@ import 'package:flutter/material.dart';
 class AuraMeter extends StatelessWidget {
   final int likes;
   final int dislikes;
-  final double height;
+ // final double height;
 
   const AuraMeter({
     super.key,
     required this.likes,
     required this.dislikes,
-    this.height = 4.0,
+    //required this.height,
   });
 
   @override
   Widget build(BuildContext context) {
-    final total = likes + dislikes;
-    
-    // Show a neutral gray strip when there are no interactions
-    if (total == 0) {
-      return SizedBox(
-        height: height,
-        child: Container(
-          color: Colors.grey.shade200,
-        ),
-      );
-    }
+    final totalVotes = likes + dislikes;
+    final percentage = totalVotes > 0 ? (likes / totalVotes * 100).round() : 0;
 
-    final likeRatio = likes / total;
-    
     return SizedBox(
-      height: height,
-      child: Row(
+      width: 40,
+      //height: height,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            flex: (likeRatio * 100).round(),
-            child: Container(
-              color: Colors.green.shade300,
+          const Text(
+            'A+',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.green,
             ),
           ),
           Expanded(
-            flex: ((1 - likeRatio) * 100).round(),
-            child: Container(
-              color: Colors.red.shade300,
+            flex: 1,
+            child: Center(
+              child: RotatedBox(
+                quarterTurns: 1,
+                child: SizedBox(
+                  
+                  height: 10,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: totalVotes > 0 ? likes / totalVotes : 0,
+                      backgroundColor: Colors.red.shade100,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.green.shade300),
+                      minHeight: 8,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
+          const Text(
+            'A-',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.red,
+            ),
+          ),
+          if (totalVotes > 0) ...[
+            const SizedBox(height: 2),
+            Text(
+              '$percentage%',
+              style: const TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 4),
+          ],
         ],
       ),
     );

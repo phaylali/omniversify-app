@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,8 +9,11 @@ import 'core/localization/app_localizations.dart';
 
 void main() {
   runApp(
-    const ProviderScope(
-      child: SocialMediaApp(),
+    DevicePreview(
+      enabled: false,
+      builder: (context  )=> const ProviderScope(
+        child: SocialMediaApp(),
+      ),
     ),
   );
 }
