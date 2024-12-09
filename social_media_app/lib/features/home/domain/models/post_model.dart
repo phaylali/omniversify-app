@@ -83,7 +83,8 @@ class Post {
         sharesCount: json['sharesCount'] as int,
         repostsCount: json['repostsCount'] as int,
         quotesCount: json['quotesCount'] as int,
-        attachments: (json['attachments'] as List<dynamic>?)?.cast<String>() ?? [],
+        attachments:
+            (json['attachments'] as List<dynamic>?)?.cast<String>() ?? [],
         reactions: (json['reactions'] as Map<String, dynamic>?)?.map(
               (k, v) => MapEntry(k, v as int),
             ) ??
@@ -144,7 +145,8 @@ class EmbeddedPost {
         author: UserInfo.fromJson(json['author'] as Map<String, dynamic>),
         content: json['content'] as String,
         createdAt: DateTime.parse(json['createdAt'] as String),
-        attachments: (json['attachments'] as List<dynamic>?)?.cast<String>() ?? [],
+        attachments:
+            (json['attachments'] as List<dynamic>?)?.cast<String>() ?? [],
         mentions: (json['mentions'] as List<dynamic>?)?.cast<String>() ?? [],
         hashtags: (json['hashtags'] as List<dynamic>?)?.cast<String>() ?? [],
       );
@@ -198,14 +200,16 @@ class Quote {
         author: UserInfo.fromJson(json['author'] as Map<String, dynamic>),
         content: json['content'] as String,
         createdAt: DateTime.parse(json['createdAt'] as String),
-        originalPost: EmbeddedPost.fromJson(json['originalPost'] as Map<String, dynamic>),
+        originalPost:
+            EmbeddedPost.fromJson(json['originalPost'] as Map<String, dynamic>),
         likes: json['likes'] as int,
         dislikes: json['dislikes'] as int,
         commentsCount: json['commentsCount'] as int,
         sharesCount: json['sharesCount'] as int,
         repostsCount: json['repostsCount'] as int,
         quotesCount: json['quotesCount'] as int,
-        attachments: (json['attachments'] as List<dynamic>?)?.cast<String>() ?? [],
+        attachments:
+            (json['attachments'] as List<dynamic>?)?.cast<String>() ?? [],
         mentions: (json['mentions'] as List<dynamic>?)?.cast<String>() ?? [],
         hashtags: (json['hashtags'] as List<dynamic>?)?.cast<String>() ?? [],
       );
@@ -251,8 +255,10 @@ class Repost {
         id: json['id'] as String,
         author: UserInfo.fromJson(json['author'] as Map<String, dynamic>),
         createdAt: DateTime.parse(json['createdAt'] as String),
-        originalPost: EmbeddedPost.fromJson(json['originalPost'] as Map<String, dynamic>),
-        attachments: (json['attachments'] as List<dynamic>?)?.cast<String>() ?? [],
+        originalPost:
+            EmbeddedPost.fromJson(json['originalPost'] as Map<String, dynamic>),
+        attachments:
+            (json['attachments'] as List<dynamic>?)?.cast<String>() ?? [],
         mentions: (json['mentions'] as List<dynamic>?)?.cast<String>() ?? [],
         hashtags: (json['hashtags'] as List<dynamic>?)?.cast<String>() ?? [],
       );

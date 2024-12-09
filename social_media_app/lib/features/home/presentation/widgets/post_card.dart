@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../domain/models/models.dart';
 import 'engagement_metrics.dart';
 import 'aura_meter.dart';
@@ -31,7 +32,8 @@ class _PostCardState extends State<PostCard> {
   }
 
   void _measureContentHeight() {
-    final RenderBox? renderBox = _contentKey.currentContext?.findRenderObject() as RenderBox?;
+    final RenderBox? renderBox =
+        _contentKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox != null) {
       setState(() {
         _contentHeight = renderBox.size.height;
@@ -66,7 +68,8 @@ class _PostCardState extends State<PostCard> {
                         break;
                     }
                   },
-                  itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<String>>[
                     const PopupMenuItem<String>(
                       value: 'report',
                       child: Text('Report'),
@@ -93,22 +96,19 @@ class _PostCardState extends State<PostCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildContent(),
-                        if (widget.post.attachments.isNotEmpty) _buildAttachments(),
+                        if (widget.post.attachments.isNotEmpty)
+                          _buildAttachments(),
                         if (!widget.isEmbedded) _buildEngagementMetrics(),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: SizedBox(
-                      height: _contentHeight,
-                      child: _buildAuraMeter(),
-                    ),
+                  SizedBox(
+                    height: _contentHeight,
+                    child: _buildAuraMeter(),
                   ),
                 ],
               ),
             ),
-           
             const Divider(height: 1),
           ],
         ),
@@ -118,7 +118,7 @@ class _PostCardState extends State<PostCard> {
 
   Widget _buildHeader() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Row(
         children: [
           CircleAvatar(
@@ -163,7 +163,7 @@ class _PostCardState extends State<PostCard> {
 
   Widget _buildContent() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 8.0),
+      padding: const EdgeInsets.fromLTRB(4.0, 4.0, 8.0, 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -192,7 +192,7 @@ class _PostCardState extends State<PostCard> {
     return Column(
       children: widget.post.attachments.map((attachment) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
           child: GestureDetector(
             onTap: () {
               showDialog(
@@ -221,7 +221,7 @@ class _PostCardState extends State<PostCard> {
                             color: Colors.white,
                             size: 30,
                           ),
-                          onPressed: () => Navigator.of(context).pop(),
+                          onPressed: () => context.pop(),
                         ),
                       ),
                     ],
@@ -258,7 +258,7 @@ class _PostCardState extends State<PostCard> {
     return AuraMeter(
       likes: widget.post.likes,
       dislikes: widget.post.dislikes,
-     //` height: 60.0, // Add a fixed height
+      //` height: 60.0, // Add a fixed height
     );
   }
 

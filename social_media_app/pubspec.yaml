@@ -49,14 +49,21 @@ dependencies:
 
   # UI Utilities
   cached_network_image: ^3.2.3
-  animations: ^2.0.7
+  media_kit: ^1.1.10                    # Primary package
+  media_kit_video: ^1.2.4               # For video rendering
+  media_kit_libs_windows_video: ^1.0.9  # Windows package
+  http: ^1.1.0
+  file_picker: ^6.1.1
+  path_provider: ^2.1.1
 
   # Icons
   cupertino_icons: ^1.0.2
 
   # Menu
-
   fab_circular_menu_plus: ^0.0.2
+
+  # TV Player
+  flutter_vlc_player: ^7.4.0
 
   package_info_plus: ^4.1.0
   url_launcher: ^6.1.12

@@ -6,6 +6,7 @@ import '../../features/home/presentation/home_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/doom_scroll/presentation/doom_scroll_screen.dart';
+import '../../features/tv/presentation/pages/tv_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -39,6 +40,13 @@ final routerProvider = Provider<GoRouter>((ref) {
               child: const DoomScrollScreen(),
             ),
           ),
+          GoRoute(
+            path: 'tv',
+            pageBuilder: (context, state) => MaterialPage(
+              key: state.pageKey,
+              child: const TvPage(),
+            ),
+          ),
         ],
       ),
     ],
@@ -59,4 +67,5 @@ extension NavigationExtension on BuildContext {
   void goToProfile() => go('/profile');
   void goToSettings() => go('/settings');
   void goToDoomScroll() => go('/doom-scroll');
+  void goToTv() => go('/tv');
 }

@@ -15,7 +15,7 @@ class ResponsiveCardWrapper extends StatelessWidget {
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width > 600
               ? MediaQuery.of(context).size.width * 0.6
-              : MediaQuery.of(context).size.width * 0.9,
+              : MediaQuery.of(context).size.width * 0.96,
         ),
         child: child,
       ),

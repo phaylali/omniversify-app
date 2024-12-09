@@ -84,6 +84,7 @@ class AppLocalizations {
           'series': 'Series',
           'audio': 'Audio',
           'music': 'Music',
+          'tv': 'TV',
         };
       case AppLanguage.arabic:
         return {
@@ -152,6 +153,7 @@ class AppLocalizations {
           'series': 'مسلسل',
           'audio': 'صوت',
           'music': 'موسيقى',
+          'tv': 'التلفاز',
         };
       case AppLanguage.spanish:
         return {

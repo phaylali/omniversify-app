@@ -87,6 +87,14 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               context.go('/doom-scroll');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.tv),
+            title: Text(localizer.translate(context, 'tv')),
+            onTap: () {
+              widget.scaffoldKey.currentState?.closeDrawer();
+              context.go('/tv');
+            },
+          ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),

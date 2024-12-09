@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media_app/features/home/presentation/widgets/post_creation_block.dart';
 import '../../../shared/widgets/app_drawer.dart';
 import '../../../shared/widgets/custom_app_bar.dart';
-import '../../../shared/widgets/reorderable_tab_bar.dart';
 import '../domain/models/models.dart';
 import 'widgets/people_section.dart';
 import 'widgets/post_card.dart';
@@ -12,6 +11,7 @@ import 'widgets/quote_card.dart';
 import 'widgets/repost_card.dart';
 import '../../../shared/widgets/fab_menu.dart';
 import '../data/mock_data.dart';
+import 'package:go_router/go_router.dart';
 
 enum ContentType {
   all,
@@ -36,13 +36,13 @@ enum ContentType {
 
 class CustomTab {
   final String label;
-  
+
   const CustomTab({required this.label});
-  
+
   Map<String, dynamic> toJson() => {
-    'label': label,
-  };
-  
+        'label': label,
+      };
+
   factory CustomTab.fromJson(Map<String, dynamic> json) {
     return CustomTab(
       label: json['label'] as String,
@@ -52,7 +52,7 @@ class CustomTab {
 
 extension ContentTypeExtension on ContentType {
   String get label => toString().split('.').last;
-  
+
   IconData get icon {
     switch (this) {
       case ContentType.all:
@@ -102,15 +102,16 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends ConsumerState<HomeScreen>
+    with TickerProviderStateMixin {
   static const String _activeTabsKey = 'active_tabs';
   static const String _customTabsKey = 'custom_tabs';
-  
+
   List<ContentType> _activeTabs = [ContentType.all];
   Map<String, CustomTab> _customTabs = {};
   late TabController _tabController;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  
+
   @override
   void initState() {
     super.initState();
@@ -138,7 +139,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
     final prefs = await SharedPreferences.getInstance();
     final savedTabs = prefs.getStringList(_activeTabsKey);
     final savedCustomTabs = prefs.getStringList(_customTabsKey);
-    
+
     // Load custom tabs first
     if (savedCustomTabs != null) {
       _customTabs = Map.fromEntries(
@@ -148,7 +149,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
         }),
       );
     }
-    
+
     if (savedTabs != null && mounted) {
       final newTabs = savedTabs
           .map((tab) => ContentType.values.firstWhere(
@@ -156,7 +157,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 orElse: () => ContentType.custom,
               ))
           .toList();
-      
+
       // Ensure "all" tab is present and first
       if (!newTabs.contains(ContentType.all)) {
         newTabs.insert(0, ContentType.all);
@@ -224,7 +225,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Text(
-                  'Manage Tabs',
+                  'Tabs Manager',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -247,7 +248,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                           trailing: isAllTab
                               ? const Tooltip(
                                   message: 'Default tab cannot be removed',
-                                  child: Icon(Icons.lock_outline, color: Colors.grey),
+                                  child: Icon(Icons.lock_outline,
+                                      color: Colors.grey),
                                 )
                               : IconButton(
                                   icon: const Icon(Icons.remove_circle_outline),
@@ -255,7 +257,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                                     setState(() {
                                       _activeTabs.remove(tab);
                                       _tabController.dispose();
-                                      _tabController = TabController(length: _activeTabs.length, vsync: this);
+                                      _tabController = TabController(
+                                          length: _activeTabs.length,
+                                          vsync: this);
                                       _tabController.addListener(() {
                                         if (!_tabController.indexIsChanging) {
                                           setState(() {});
@@ -263,7 +267,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                                       });
                                       _saveTabSettings();
                                     });
-                                    Navigator.pop(context);
+                                    context.pop();
                                   },
                                 ),
                         );
@@ -276,7 +280,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                           final item = _activeTabs.removeAt(oldIndex);
                           _activeTabs.insert(newIndex, item);
                           _tabController.dispose();
-                          _tabController = TabController(length: _activeTabs.length, vsync: this);
+                          _tabController = TabController(
+                              length: _activeTabs.length, vsync: this);
                           _tabController.addListener(() {
                             if (!_tabController.indexIsChanging) {
                               setState(() {});
@@ -305,7 +310,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                                 padding: const EdgeInsets.all(16.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     const Text(
                                       'Add Tab',
@@ -319,7 +325,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                                       child: SingleChildScrollView(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
                                           children: [
                                             const Text(
                                               'Available Tabs',
@@ -334,26 +341,38 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                                               runSpacing: 8,
                                               children: ContentType.values
                                                   .where((type) =>
-                                                      !_activeTabs.contains(type) &&
+                                                      !_activeTabs
+                                                          .contains(type) &&
                                                       type != ContentType.all &&
-                                                      type != ContentType.custom)
+                                                      type !=
+                                                          ContentType.custom)
                                                   .map((type) => ActionChip(
-                                                        avatar: Icon(type.icon, size: 18),
+                                                        avatar: Icon(type.icon,
+                                                            size: 18),
                                                         label: Text(type.label),
                                                         onPressed: () {
                                                           setState(() {
-                                                            _activeTabs.add(type);
-                                                            _tabController.dispose();
-                                                            _tabController = TabController(length: _activeTabs.length, vsync: this);
-                                                            _tabController.addListener(() {
-                                                              if (!_tabController.indexIsChanging) {
+                                                            _activeTabs
+                                                                .add(type);
+                                                            _tabController
+                                                                .dispose();
+                                                            _tabController =
+                                                                TabController(
+                                                                    length: _activeTabs
+                                                                        .length,
+                                                                    vsync:
+                                                                        this);
+                                                            _tabController
+                                                                .addListener(
+                                                                    () {
+                                                              if (!_tabController
+                                                                  .indexIsChanging) {
                                                                 setState(() {});
                                                               }
                                                             });
                                                             _saveTabSettings();
                                                           });
-                                                          Navigator.pop(context);
-                                                          Navigator.pop(context);
+                                                          context.pop();
                                                         },
                                                       ))
                                                   .toList(),
@@ -371,13 +390,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                                               decoration: const InputDecoration(
                                                 labelText: 'Tab Name',
                                                 border: OutlineInputBorder(),
-                                                prefixIcon: Icon(Icons.label_outline),
+                                                prefixIcon:
+                                                    Icon(Icons.label_outline),
                                               ),
                                               onSubmitted: (value) {
                                                 if (value.isNotEmpty) {
                                                   _addCustomTab(value);
-                                                  Navigator.pop(context);
-                                                  Navigator.pop(context);
+                                                  context.pop();
                                                 }
                                               },
                                             ),
@@ -390,7 +409,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         TextButton(
-                                          onPressed: () => Navigator.pop(context),
+                                          onPressed: () => context.pop(),
                                           child: const Text('Cancel'),
                                         ),
                                       ],
@@ -404,7 +423,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                       },
                     ),
                     TextButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => context.pop(),
                       child: const Text('Close'),
                     ),
                   ],
@@ -456,7 +475,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
       if (tab == ContentType.custom) {
         // Find the corresponding custom tab label
         final customTab = _customTabs.entries.firstWhere(
-          (entry) => _activeTabs.indexOf(ContentType.custom) == _activeTabs.indexOf(tab),
+          (entry) =>
+              _activeTabs.indexOf(ContentType.custom) ==
+              _activeTabs.indexOf(tab),
           orElse: () => MapEntry('Custom', CustomTab(label: 'Custom')),
         );
         return Tab(
@@ -503,7 +524,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                       Expanded(
                         child: SizedBox.expand(
                           child: Card(
-                            margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 8.0),
                             child: Padding(
                               padding: EdgeInsets.all(16.0),
                               child: Column(
@@ -556,34 +578,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
             )
           : Column(
               children: [
-                const PostCreationBlock(),
-                ReorderableTabBar(
-                  onReorder: (oldIndex, newIndex) {
-                    setState(() {
-                      if (newIndex > oldIndex) {
-                        newIndex -= 1;
-                      }
-                      final item = _activeTabs.removeAt(oldIndex);
-                      _activeTabs.insert(newIndex, item);
-                      _tabController.dispose();
-                      _tabController = TabController(length: _activeTabs.length, vsync: this);
-                      _tabController.addListener(() {
-                        if (!_tabController.indexIsChanging) {
-                          setState(() {});
-                        }
-                      });
-                      _saveTabSettings();
-                    });
-                  },
-                  tabs: _buildTabs(),
-                  controller: _tabController,
-                ),
                 Expanded(
                   child: TabBarView(
                     controller: _tabController,
-                    children: _activeTabs
-                        .map((tab) => _buildPostsList(tab))
-                        .toList(),
+                    children:
+                        _activeTabs.map((tab) => _buildPostsList(tab)).toList(),
                   ),
                 ),
               ],

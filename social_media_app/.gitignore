@@ -18,10 +18,11 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# Visual Studio Code related
+.classpath
+.project
+.settings/
+.vscode/*
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -32,6 +33,11 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+*.g.dart
+*.freezed.dart
+*.gr.dart
+*.config.dart
+*.mocks.dart
 
 # Symbolication related
 app.*.symbols
@@ -43,3 +49,83 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# iOS/XCode related
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# Windows related
+**/windows/**/Generated.props
+**/windows/**/Generated.targets
+**/windows/**/cmake-build-debug/
+**/windows/**/CMakeFiles/
+**/windows/**/*.sln
+**/windows/**/*.vcxproj
+**/windows/**/*.vcxproj.filters
+**/windows/**/*.vcxproj.user
+**/windows/**/x64/
+**/windows/**/Debug/
+**/windows/**/Release/
+**/windows/**/Win32/
+**/windows/**/out/
+**/windows/**/build/
+**/windows/**/.vs/
+**/windows/**/CMakeCache.txt
+**/windows/**/CMakeFiles/
+**/windows/**/cmake_install.cmake
+**/windows/**/install_manifest.txt
+
+# Coverage
+coverage/
+*.lcov
+.test_coverage.dart
+
+# Firebase related
+.firebase/
+firebase_options.dart
+
+# FVM related
+.fvm/
+
+# Mason related
+mason-lock.json
+.mason/
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.gr.dart
+*.config.dart
+*.mocks.dart
+*.gen.dart
+*.chopper.dart
+*.swagger.dart
+*.reflectable.dart
+*.injectable.dart
+*.module.dart
