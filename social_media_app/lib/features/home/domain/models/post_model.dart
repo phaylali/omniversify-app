@@ -1,6 +1,53 @@
 import 'package:flutter/foundation.dart';
-
 import 'attachment_models.dart';
+
+class AttachmentList {
+  final List<Attachment> attachments;
+
+  AttachmentList({required this.attachments});
+
+  factory AttachmentList.fromJson(List<dynamic> json) {
+    return AttachmentList(
+      attachments: json.map((attachmentJson) {
+        final attachmentType = attachmentJson['type'] as String;
+        switch (attachmentType) {
+          case 'link':
+            return AttachmentLink.fromJson(attachmentJson);
+          case 'video':
+            return AttachmentVideo.fromJson(attachmentJson);
+          case 'image':
+            return AttachmentImage.fromJson(attachmentJson);
+          case 'book':
+            return AttachmentBook.fromJson(attachmentJson);
+          case 'location':
+            return AttachmentLocation.fromJson(attachmentJson);
+          case 'game':
+            return AttachmentGame.fromJson(attachmentJson);
+          case 'poll':
+            return AttachmentPoll.fromJson(attachmentJson);
+          case 'music':
+            return AttachmentMusic.fromJson(attachmentJson);
+          case 'movie':
+            return AttachmentMovie.fromJson(attachmentJson);
+          case 'series':
+            return AttachmentSeries.fromJson(attachmentJson);
+          case 'gif':
+            return AttachmentGif.fromJson(attachmentJson);
+          case 'audio':
+            return AttachmentAudio.fromJson(attachmentJson);
+          case 'activity':
+            return AttachmentActivity.fromJson(attachmentJson);
+          default:
+            throw Exception('Unknown attachment type: $attachmentType');
+        }
+      }).toList(),
+    );
+  }
+
+  List<dynamic> toJson() {
+    return attachments.map((attachment) => attachment.toJson()).toList();
+  }
+}
 
 @immutable
 class UserInfo {
@@ -36,7 +83,7 @@ class Post {
   final UserInfo author;
   final String content;
   final DateTime createdAt;
-  final List<Attachment> attachments;
+  final AttachmentList attachments; // Change here
   final Map<String, int> reactions;
   final int likes;
   final int dislikes;
@@ -44,12 +91,6 @@ class Post {
   final int sharesCount;
   final int repostsCount;
   final int quotesCount;
-  final int clapsCount;
-  final int wowCount;
-  final int heartCount;
-  final int rocketCount;
-  final int partyPopperCount;
-  final List<String> mentions;
   final List<String> hashtags;
 
   const Post({
@@ -57,68 +98,50 @@ class Post {
     required this.author,
     required this.content,
     required this.createdAt,
-    required this.likes,
-    required this.dislikes,
-    required this.commentsCount,
-    required this.sharesCount,
-    required this.repostsCount,
-    required this.quotesCount,
-    this.attachments = const [],
+    required this.attachments, // Change here
     this.reactions = const {},
-    this.clapsCount = 0,
-    this.wowCount = 0,
-    this.heartCount = 0,
-    this.rocketCount = 0,
-    this.partyPopperCount = 0,
-    this.mentions = const [],
+    this.likes = 0,
+    this.dislikes = 0,
+    this.commentsCount = 0,
+    this.sharesCount = 0,
+    this.repostsCount = 0,
+    this.quotesCount = 0,
     this.hashtags = const [],
   });
 
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
-        id: json['id'] as String,
-        author: UserInfo.fromJson(json['author'] as Map<String, dynamic>),
-        content: json['content'] as String,
-        createdAt: DateTime.parse(json['createdAt'] as String),
-        likes: json['likes'] as int,
-        dislikes: json['dislikes'] as int,
-        commentsCount: json['commentsCount'] as int,
-        sharesCount: json['sharesCount'] as int,
-        repostsCount: json['repostsCount'] as int,
-        quotesCount: json['quotesCount'] as int,
-        attachments:
-            (json['attachments'] as List<dynamic>?)?.cast<String>() ?? [],
-        reactions: (json['reactions'] as Map<String, dynamic>?)?.map(
-              (k, v) => MapEntry(k, v as int),
-            ) ??
-            {},
-        clapsCount: json['clapsCount'] as int? ?? 0,
-        wowCount: json['wowCount'] as int? ?? 0,
-        heartCount: json['heartCount'] as int? ?? 0,
-        rocketCount: json['rocketCount'] as int? ?? 0,
-        partyPopperCount: json['partyPopperCount'] as int? ?? 0,
-        mentions: (json['mentions'] as List<dynamic>?)?.cast<String>() ?? [],
-        hashtags: (json['hashtags'] as List<dynamic>?)?.cast<String>() ?? [],
-      );
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      id: json['id'] as String,
+      content: json['content'] as String,
+      author: UserInfo.fromJson(json['author'] as Map<String, dynamic>),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      attachments: AttachmentList.fromJson(
+          json['attachments'] as List<dynamic>), // Use AttachmentList
+      likes: json['likes'] as int? ?? 0,
+      dislikes: json['dislikes'] as int? ?? 0,
+      commentsCount: json['commentsCount'] as int? ?? 0,
+      sharesCount: json['sharesCount'] as int? ?? 0,
+      repostsCount: json['repostsCount'] as int? ?? 0,
+      quotesCount: json['quotesCount'] as int? ?? 0,
+      hashtags: (json['hashtags'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'author': author.toJson(),
         'content': content,
         'createdAt': createdAt.toIso8601String(),
+        'attachments': attachments.toJson(), // Convert AttachmentList to JSON
         'likes': likes,
         'dislikes': dislikes,
         'commentsCount': commentsCount,
         'sharesCount': sharesCount,
         'repostsCount': repostsCount,
         'quotesCount': quotesCount,
-        'attachments': attachments,
-        'reactions': reactions,
-        'clapsCount': clapsCount,
-        'wowCount': wowCount,
-        'heartCount': heartCount,
-        'rocketCount': rocketCount,
-        'partyPopperCount': partyPopperCount,
-        'mentions': mentions,
         'hashtags': hashtags,
       };
 }

@@ -15,7 +15,7 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-  late double _contentHeight;
+  late double _contentHeight = 0; // Initialize with a default value
   bool _isExpanded = false;
   final double _maxCollapsedHeight = 100.0;
 

@@ -153,3 +153,220 @@ class AttachmentLocation extends Attachment {
         placeId: json['placeId'] as String?,
       );
 }
+
+class AttachmentGame extends Attachment {
+  final String title;
+  final String platform;
+  final DateTime releaseDate;
+  final String coverUrl;
+
+  const AttachmentGame({
+    required this.title,
+    required this.platform,
+    required this.releaseDate,
+    required this.coverUrl,
+  }) : super(type: 'game');
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': type,
+        'title': title,
+        'platform': platform,
+        'releaseDate': releaseDate.toIso8601String(),
+        'coverUrl': coverUrl,
+      };
+
+  factory AttachmentGame.fromJson(Map<String, dynamic> json) => AttachmentGame(
+        title: json['title'] as String,
+        platform: json['platform'] as String,
+        releaseDate: DateTime.parse(json['releaseDate'] as String),
+        coverUrl: json['coverUrl'] as String,
+      );
+}
+
+class AttachmentPoll extends Attachment {
+  final String question;
+  final List<String> options;
+  final List<int> votes;
+
+  const AttachmentPoll({
+    required this.question,
+    required this.options,
+    required this.votes,
+  }) : super(type: 'poll');
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': type,
+        'question': question,
+        'options': options,
+        'votes': votes,
+      };
+
+  factory AttachmentPoll.fromJson(Map<String, dynamic> json) => AttachmentPoll(
+        question: json['question'] as String,
+        options: List<String>.from(json['options']),
+        votes: List<int>.from(json['votes']),
+      );
+}
+
+class AttachmentMusic extends Attachment {
+  final String title;
+  final String artist;
+  final String album;
+  final Duration duration;
+
+  const AttachmentMusic({
+    required this.title,
+    required this.artist,
+    required this.album,
+    required this.duration,
+  }) : super(type: 'music');
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': type,
+        'title': title,
+        'artist': artist,
+        'album': album,
+        'duration': duration.inSeconds,
+      };
+
+  factory AttachmentMusic.fromJson(Map<String, dynamic> json) =>
+      AttachmentMusic(
+        title: json['title'] as String,
+        artist: json['artist'] as String,
+        album: json['album'] as String,
+        duration: Duration(seconds: json['duration'] as int),
+      );
+}
+
+class AttachmentMovie extends Attachment {
+  final String title;
+  final String director;
+  final int releaseYear;
+  final String trailerUrl;
+
+  const AttachmentMovie({
+    required this.title,
+    required this.director,
+    required this.releaseYear,
+    required this.trailerUrl,
+  }) : super(type: 'movie');
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': type,
+        'title': title,
+        'director': director,
+        'releaseYear': releaseYear,
+        'trailerUrl': trailerUrl,
+      };
+
+  factory AttachmentMovie.fromJson(Map<String, dynamic> json) =>
+      AttachmentMovie(
+        title: json['title'] as String,
+        director: json['director'] as String,
+        releaseYear: json['releaseYear'] as int,
+        trailerUrl: json['trailerUrl'] as String,
+      );
+}
+
+class AttachmentSeries extends Attachment {
+  final String title;
+  final int seasons;
+  final int episodes;
+
+  const AttachmentSeries({
+    required this.title,
+    required this.seasons,
+    required this.episodes,
+  }) : super(type: 'series');
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': type,
+        'title': title,
+        'seasons': seasons,
+        'episodes': episodes,
+      };
+
+  factory AttachmentSeries.fromJson(Map<String, dynamic> json) =>
+      AttachmentSeries(
+        title: json['title'] as String,
+        seasons: json['seasons'] as int,
+        episodes: json['episodes'] as int,
+      );
+}
+
+class AttachmentGif extends Attachment {
+  final String url;
+  final String description;
+
+  const AttachmentGif({
+    required this.url,
+    required this.description,
+  }) : super(type: 'gif');
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': type,
+        'url': url,
+        'description': description,
+      };
+
+  factory AttachmentGif.fromJson(Map<String, dynamic> json) => AttachmentGif(
+        url: json['url'] as String,
+        description: json['description'] as String,
+      );
+}
+
+class AttachmentAudio extends Attachment {
+  final String url;
+  final Duration duration;
+  final String title;
+
+  const AttachmentAudio({
+    required this.url,
+    required this.duration,
+    required this.title,
+  }) : super(type: 'audio');
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': type,
+        'url': url,
+        'duration': duration.inSeconds,
+        'title': title,
+      };
+
+  factory AttachmentAudio.fromJson(Map<String, dynamic> json) =>
+      AttachmentAudio(
+        url: json['url'] as String,
+        duration: Duration(seconds: json['duration'] as int),
+        title: json['title'] as String,
+      );
+}
+
+class AttachmentActivity extends Attachment {
+  final String activityType;
+  final String description;
+
+  const AttachmentActivity({
+    required this.activityType,
+    required this.description,
+  }) : super(type: 'activity');
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'type': type,
+        'activityType': activityType,
+        'description': description,
+      };
+
+  factory AttachmentActivity.fromJson(Map<String, dynamic> json) =>
+      AttachmentActivity(
+        activityType: json['activityType'] as String,
+        description: json['description'] as String,
+      );
+}
