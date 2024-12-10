@@ -1,11 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'user_info.dart';
+import 'attachment_models.dart';
 
+@immutable
 class Post {
   final String id;
   final String content;
   final UserInfo author;
   final DateTime createdAt;
-  final List<String> attachments;
+  final List<Attachment> attachments;
   final int likes;
   final int dislikes;
   final int commentsCount;
@@ -35,7 +38,21 @@ class Post {
       content: json['content'] as String,
       author: UserInfo.fromJson(json['author'] as Map<String, dynamic>),
       createdAt: DateTime.parse(json['createdAt'] as String),
-      attachments: (json['attachments'] as List<dynamic>?)?.map((e) => e as String).toList() ?? [],
+      attachments: (json['attachments'] as List<dynamic>?)?.map((e) {
+        final Map<String, dynamic> attachment = e as Map<String, dynamic>;
+        switch (attachment['type']) {
+          case 'link':
+            return AttachmentLink.fromJson(attachment);
+          case 'video':
+            return AttachmentVideo.fromJson(attachment);
+          case 'image':
+            return AttachmentImage.fromJson(attachment);
+          case 'book':
+            return AttachmentBook.fromJson(attachment);
+          default:
+            throw Exception('Unknown attachment type: ${attachment['type']}');
+        }
+      }).toList() ?? [],
       likes: json['likes'] as int? ?? 0,
       dislikes: json['dislikes'] as int? ?? 0,
       commentsCount: json['commentsCount'] as int? ?? 0,
@@ -52,7 +69,7 @@ class Post {
       'content': content,
       'author': author.toJson(),
       'createdAt': createdAt.toIso8601String(),
-      'attachments': attachments,
+      'attachments': attachments.map((e) => e.toJson()).toList(),
       'likes': likes,
       'dislikes': dislikes,
       'commentsCount': commentsCount,

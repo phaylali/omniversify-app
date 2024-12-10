@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../domain/models/models.dart';
+import '../../domain/models/attachment_models.dart';
 import 'engagement_metrics.dart';
 import 'aura_meter.dart';
-import '../../../../shared/widgets/responsive_card_wrapper.dart';
 
 class PostCard extends StatefulWidget {
   final Post post;
-  final bool isEmbedded;
 
-  const PostCard({
-    super.key,
-    required this.post,
-    this.isEmbedded = false,
-  });
+  const PostCard({Key? key, required this.post}) : super(key: key);
 
   @override
   State<PostCard> createState() => _PostCardState();
 }
 
 class _PostCardState extends State<PostCard> {
-  final GlobalKey _contentKey = GlobalKey();
-  double _contentHeight = 100.0; // Default height
+  late double _contentHeight;
+  bool _isExpanded = false;
+  final double _maxCollapsedHeight = 100.0;
 
   @override
   void initState() {
@@ -32,84 +28,31 @@ class _PostCardState extends State<PostCard> {
   }
 
   void _measureContentHeight() {
-    final RenderBox? renderBox =
-        _contentKey.currentContext?.findRenderObject() as RenderBox?;
-    if (renderBox != null) {
-      setState(() {
-        _contentHeight = renderBox.size.height;
-      });
-    }
+    setState(() {
+      _contentHeight = context.size?.height ?? 0;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveCardWrapper(
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: widget.isEmbedded ? 4 : 8),
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildHeader()),
-                PopupMenuButton<String>(
-                  icon: const Icon(Icons.more_vert, color: Colors.grey),
-                  onSelected: (value) {
-                    switch (value) {
-                      case 'report':
-                        // TODO: Implement report functionality
-                        break;
-                      case 'unfollow':
-                        // TODO: Implement unfollow functionality
-                        break;
-                      case 'block':
-                        // TODO: Implement block functionality
-                        break;
-                    }
-                  },
-                  itemBuilder: (BuildContext context) =>
-                      <PopupMenuEntry<String>>[
-                    const PopupMenuItem<String>(
-                      value: 'report',
-                      child: Text('Report'),
-                    ),
-                    const PopupMenuItem<String>(
-                      value: 'unfollow',
-                      child: Text('Unfollow'),
-                    ),
-                    const PopupMenuItem<String>(
-                      value: 'block',
-                      child: Text('Block'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: Column(
-                      key: _contentKey,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildContent(),
-                        if (widget.post.attachments.isNotEmpty)
-                          _buildAttachments(),
-                        if (!widget.isEmbedded) _buildEngagementMetrics(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: _contentHeight,
-                    child: _buildAuraMeter(),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(height: 1),
+            _buildHeader(),
+            const SizedBox(height: 8.0),
+            _buildContent(),
+            if (widget.post.attachments.isNotEmpty) ...[
+              const SizedBox(height: 8.0),
+              _buildAttachments(),
+            ],
+            const SizedBox(height: 8.0),
+            _buildEngagementMetrics(),
+            const SizedBox(height: 8.0),
+            //_buildAuraMeter(),
           ],
         ),
       ),
@@ -117,129 +60,342 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 16,
-            backgroundImage: widget.post.author.avatarUrl != null
-                ? NetworkImage(widget.post.author.avatarUrl!)
-                : null,
-            child: widget.post.author.avatarUrl == null
-                ? Text(widget.post.author.username[0].toUpperCase())
-                : null,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.post.author.displayName ?? widget.post.author.username,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+    return Row(
+      children: [
+        CircleAvatar(
+          backgroundImage: NetworkImage(widget.post.author.avatarUrl ?? ''),
+        ),
+        const SizedBox(width: 8.0),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.post.author.displayName ?? widget.post.author.username,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  '@${widget.post.author.username}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
+              ),
+              Text(
+                '@${widget.post.author.username}',
+                style: TextStyle(
+                  color: Colors.grey[600],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Text(
-            _formatTimestamp(widget.post.createdAt),
-            style: const TextStyle(
-              color: Colors.grey,
-              fontSize: 12,
-            ),
+        ),
+        Text(
+          _formatTimestamp(widget.post.createdAt),
+          style: TextStyle(
+            color: Colors.grey[600],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Widget _buildContent() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(4.0, 4.0, 8.0, 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (_contentHeight > _maxCollapsedHeight && !_isExpanded)
+          Stack(
+            children: [
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: _maxCollapsedHeight,
+                ),
+                child: Text(
+                  widget.post.content,
+                  overflow: TextOverflow.fade,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _isExpanded = true;
+                    });
+                  },
+                  child: const Text('Show More'),
+                ),
+              ),
+            ],
+          )
+        else
           Text(widget.post.content),
-          if (widget.post.hashtags.isNotEmpty) ...[
-            const SizedBox(height: 4),
-            Wrap(
-              spacing: 4.0,
-              children: widget.post.hashtags
-                  .map((tag) => Text(
+        if (widget.post.hashtags.isNotEmpty)
+          Wrap(
+            spacing: 4.0,
+            children: widget.post.hashtags
+                .map((tag) => GestureDetector(
+                      onTap: () {
+                        // Handle hashtag tap
+                      },
+                      child: Text(
                         '#$tag',
                         style: const TextStyle(
                           color: Colors.blue,
-                          fontWeight: FontWeight.w500,
                         ),
-                      ))
-                  .toList(),
-            ),
-          ],
-        ],
-      ),
+                      ),
+                    ))
+                .toList(),
+          ),
+      ],
     );
   }
 
   Widget _buildAttachments() {
     return Column(
       children: widget.post.attachments.map((attachment) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2.0),
-          child: GestureDetector(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => Dialog.fullscreen(
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      // Image with black background
-                      Container(
-                        color: Colors.black,
-                        child: InteractiveViewer(
-                          child: Image.network(
-                            attachment,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
+        switch (attachment.type) {
+          case 'image':
+            return _buildImageAttachment(attachment as AttachmentImage);
+          case 'video':
+            return _buildVideoAttachment(attachment as AttachmentVideo);
+          case 'link':
+            return _buildLinkAttachment(attachment as AttachmentLink);
+          case 'book':
+            return _buildBookAttachment(attachment as AttachmentBook);
+          case 'location':
+            return _buildLocationAttachment(attachment as AttachmentLocation);
+          default:
+            return const SizedBox.shrink();
+        }
+      }).toList(),
+    );
+  }
+
+  Widget _buildImageAttachment(AttachmentImage attachment) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: GestureDetector(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) => Dialog.fullscreen(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    color: Colors.black,
+                    child: InteractiveViewer(
+                      child: Image.network(
+                        attachment.url,
+                        fit: BoxFit.contain,
                       ),
-                      // Close button
-                      Positioned(
-                        top: 16,
-                        right: 16,
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: 30,
-                          ),
-                          onPressed: () => context.pop(),
-                        ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 16,
+                    right: 16,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 30,
                       ),
-                    ],
+                      onPressed: () => context.pop(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(
+                attachment.url,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              if (attachment.caption != null)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    attachment.caption!,
+                    style: const TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),
-              );
-            },
-            child: ClipRRect(
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVideoAttachment(AttachmentVideo attachment) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: GestureDetector(
+        onTap: () {
+          // TODO: Implement video player
+        },
+        child: Stack(
+          children: [
+            ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.network(
-                attachment,
+                attachment.thumbnailUrl ?? attachment.url,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
+            const Positioned.fill(
+              child: Center(
+                child: Icon(
+                  Icons.play_circle_outline,
+                  color: Colors.white,
+                  size: 64,
+                ),
+              ),
+            ),
+            if (attachment.duration != null)
+              Positioned(
+                bottom: 8,
+                right: 8,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    _formatDuration(attachment.duration!),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLinkAttachment(AttachmentLink attachment) {
+    return Card(
+      child: InkWell(
+        onTap: () {
+          // TODO: Implement link opening
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              const Icon(Icons.link),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  attachment.url,
+                  style: const TextStyle(color: Colors.blue),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
-        );
-      }).toList(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBookAttachment(AttachmentBook attachment) {
+    return Card(
+      child: InkWell(
+        onTap: () {
+          // TODO: Implement book link opening
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              if (attachment.coverUrl != null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: Image.network(
+                    attachment.coverUrl!,
+                    width: 60,
+                    height: 90,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      attachment.url.split('/').last,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'by ${attachment.author}',
+                      style: TextStyle(color: Colors.grey[600]),
+                    ),
+                    if (attachment.description != null) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        attachment.description!,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLocationAttachment(AttachmentLocation attachment) {
+    return Card(
+      child: InkWell(
+        onTap: () {
+          // TODO: Implement location opening in maps
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              const Icon(Icons.location_on),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      attachment.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    if (attachment.address != null)
+                      Text(
+                        attachment.address!,
+                        style: TextStyle(color: Colors.grey[600]),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -254,26 +410,32 @@ class _PostCardState extends State<PostCard> {
     );
   }
 
-  Widget _buildAuraMeter() {
-    return AuraMeter(
-      likes: widget.post.likes,
-      dislikes: widget.post.dislikes,
-      //` height: 60.0, // Add a fixed height
-    );
-  }
+  // Widget _buildAuraMeter() {
+  //   return const AuraMeter();
+  // }
 
   String _formatTimestamp(DateTime timestamp) {
     final now = DateTime.now();
     final difference = now.difference(timestamp);
 
-    if (difference.inDays > 0) {
-      return '${difference.inDays}d';
-    } else if (difference.inHours > 0) {
-      return '${difference.inHours}h';
-    } else if (difference.inMinutes > 0) {
+    if (difference.inSeconds < 60) {
+      return '${difference.inSeconds}s';
+    } else if (difference.inMinutes < 60) {
       return '${difference.inMinutes}m';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours}h';
+    } else if (difference.inDays < 7) {
+      return '${difference.inDays}d';
     } else {
-      return 'now';
+      return '${timestamp.day}/${timestamp.month}/${timestamp.year}';
     }
+  }
+
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String hours = duration.inHours > 0 ? '${duration.inHours}:' : '';
+    String minutes = twoDigits(duration.inMinutes.remainder(60));
+    String seconds = twoDigits(duration.inSeconds.remainder(60));
+    return '$hours$minutes:$seconds';
   }
 }

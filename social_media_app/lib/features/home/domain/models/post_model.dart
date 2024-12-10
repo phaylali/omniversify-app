@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import 'attachment_models.dart';
+
 @immutable
 class UserInfo {
   final String id;
@@ -34,7 +36,7 @@ class Post {
   final UserInfo author;
   final String content;
   final DateTime createdAt;
-  final List<String> attachments;
+  final List<Attachment> attachments;
   final Map<String, int> reactions;
   final int likes;
   final int dislikes;

@@ -50,7 +50,7 @@ class _TvPageState extends State<TvPage> {
     final newIndex = _channels.indexOf(channel);
 
     // Simple channel change without preloading
-    _mainPlayer.stop();
+    _mainPlayer.pause();
     _mainPlayer.open(Media(channel.link), play: true).then((_) {
       if (mounted) {
         setState(() {
@@ -597,7 +597,7 @@ class _TvPageState extends State<TvPage> {
             onPressed: () {
               _removeChannel(_currentChannelIndex);
               if (_channels.isEmpty) {
-                _mainPlayer.stop();
+                _mainPlayer.pause();
                 setState(() {
                   _currentChannelIndex = -1;
                 });
@@ -615,7 +615,6 @@ class _TvPageState extends State<TvPage> {
             child: Center(
               child: Video(
                 controller: _mainController,
-                controls: NoVideoControls,
               ),
             ),
           ),

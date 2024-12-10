@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,13 +10,10 @@ import 'core/localization/app_localizations.dart';
 void main() {
   // Initialize media_kit
   MediaKit.ensureInitialized();
-  
+
   runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) => const ProviderScope(
-        child: SocialMediaApp(),
-      ),
+    const ProviderScope(
+      child: SocialMediaApp(),
     ),
   );
 }
@@ -35,7 +31,7 @@ class SocialMediaApp extends ConsumerWidget {
       title: 'Omniversify',
       theme: theme,
       routerConfig: router,
-      
+
       // Localization configuration
       locale: locale,
       supportedLocales: AppLocalizations.supportedLocales.values.toList(),
@@ -44,10 +40,9 @@ class SocialMediaApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      
+
       // Debugging banner
       debugShowCheckedModeBanner: false,
-      
     );
   }
 }
