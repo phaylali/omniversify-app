@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media_app/features/home/presentation/widgets/post_creation_block.dart';
-import '../../../shared/widgets/app_drawer.dart';
-import '../../../shared/widgets/custom_app_bar.dart';
-import '../domain/models/models.dart';
-import 'widgets/people_section.dart';
-import 'widgets/post_card.dart';
-import 'widgets/quote_card.dart';
-import 'widgets/repost_card.dart';
-import '../../../shared/widgets/fab_menu.dart';
-import '../data/mock_data.dart';
+import '../shared/widgets/app_drawer.dart';
+import '../shared/widgets/custom_app_bar.dart';
+import '../features/home/domain/models/models.dart';
+import '../features/home/presentation/widgets/people_section.dart';
+import '../features/home/presentation/widgets/post_card.dart';
+import '../features/home/presentation/widgets/quote_card.dart';
+import '../features/home/presentation/widgets/repost_card.dart';
+import '../shared/widgets/fab_menu.dart';
+import '../features/home/data/mock_data.dart';
 import 'package:go_router/go_router.dart';
 
 enum ContentType {
@@ -478,7 +478,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           (entry) =>
               _activeTabs.indexOf(ContentType.custom) ==
               _activeTabs.indexOf(tab),
-          orElse: () => MapEntry('Custom', CustomTab(label: 'Custom')),
+          orElse: () => const MapEntry('Custom', CustomTab(label: 'Custom')),
         );
         return Tab(
           key: ValueKey('reorderable_tab_$index'),

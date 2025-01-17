@@ -25,7 +25,7 @@ class Feed extends StatelessWidget {
             dislikes: index,
             commentsCount: index * 2,
             hashtags: ['sample', 'post$index'],
-            attachments: [],
+            attachments: const [],
           ),
         ),
       ),

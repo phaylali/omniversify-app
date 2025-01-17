@@ -1,0 +1,228 @@
+{
+    "@@locale": "ar",
+    "app_title": "اومنيفيرسيفي",
+    "@app_title": {
+        "description": "The application title",
+        "type": "text"
+    },
+    "home": "الصفحة الرئيسية",
+    "@home": {
+        "description": "Home navigation label",
+        "type": "text"
+    },
+    "profile": "الملف الشخصي",
+    "@profile": {
+        "description": "Profile navigation label",
+        "type": "text"
+    },
+    "settings": "الإعدادات",
+    "@settings": {
+        "description": "Settings navigation label",
+        "type": "text"
+    },
+    "language": "اللغة",
+    "@language": {
+        "description": "Language settings option",
+        "type": "text"
+    },
+    "theme": "المظهر",
+    "@theme": {
+        "description": "Theme settings option",
+        "type": "text"
+    },
+    "privacy_policy": "سياسة الخصوصية",
+    "@privacy_policy": {
+        "description": "Privacy policy link text",
+        "type": "text"
+    },
+    "licenses": "التراخيص",
+    "@licenses": {
+        "description": "Licenses page title",
+        "type": "text"
+    },
+    "exit": "خروج",
+    "@exit": {
+        "description": "Exit button text",
+        "type": "text"
+    },
+    "exit_confirmation": "هل أنت متأكد أنك تريد الخروج؟",
+    "@exit_confirmation": {
+        "description": "Exit confirmation dialog message",
+        "type": "text"
+    },
+    "cancel": "إلغاء",
+    "@cancel": {
+        "description": "Cancel button text",
+        "type": "text"
+    },
+    "scroll": "تمرير",
+    "@scroll": {
+        "description": "Scroll action text",
+        "type": "text"
+    },
+    "open_link": "فتح الرابط",
+    "@open_link": {
+        "description": "Open link button text",
+        "type": "text"
+    },
+    "open_link_confirmation": "هل تريد فتح هذا الرابط في المتصفح؟",
+    "@open_link_confirmation": {
+        "description": "Link opening confirmation message",
+        "type": "text"
+    },
+    "tv": "التلفاز",
+    "@tv": {
+        "description": "Television category label",
+        "type": "text"
+    },
+    "save": "حفظ",
+    "@save": {
+        "description": "Action to save content",
+        "type": "text"
+    },
+    "post": "نشر",
+    "@post": {
+        "description": "Social media post action",
+        "type": "text"
+    },
+    "activity": "نشاط",
+    "@activity": {
+        "description": "Social activity or event",
+        "type": "text"
+    },
+    "game": "لعبة",
+    "@game": {
+        "description": "Video game or gaming content",
+        "type": "text"
+    },
+    "audio": "صوت",
+    "@audio": {
+        "description": "Audio content",
+        "type": "text"
+    },
+    "music": "موسيقى",
+    "@music": {
+        "description": "Musical content",
+        "type": "text"
+    },
+    "location": "موقع",
+    "@location": {
+        "description": "Geographic location",
+        "type": "text"
+    },
+    "movie": "فيلم",
+    "@movie": {
+        "description": "Film content",
+        "type": "text"
+    },
+    "series": "مسلسل",
+    "@series": {
+        "description": "TV or web series content",
+        "type": "text"
+    },
+    "poll": "استطلاع",
+    "@poll": {
+        "description": "Voting poll",
+        "type": "text"
+    },
+    "gif": "صورة متحركة",
+    "@gif": {
+        "description": "Animated GIF image",
+        "type": "text"
+    },
+    "link": "رابط",
+    "@link": {
+        "description": "Web link or URL",
+        "type": "text"
+    },
+    "book": "كتاب",
+    "@book": {
+        "description": "Book content",
+        "type": "text"
+    },
+    "video": "فيديو",
+    "@video": {
+        "description": "Video content",
+        "type": "text"
+    },
+    "image": "صورة",
+    "@image": {
+        "description": "Image content",
+        "type": "text"
+    },
+    "whats_on_your_mind": "ماذا يدور في ذهنك؟",
+    "@whats_on_your_mind": {
+        "description": "Placeholder text for post creation input",
+        "type": "text"
+    },
+    "clearDatabase": "مسح قاعدة البيانات",
+    "@clearDatabase": {
+        "description": "Action to clear database",
+        "type": "text"
+    },
+    "delete": "حذف",
+    "@delete": {
+        "description": "Delete action",
+        "type": "text"
+    },
+    "deleteDatabase": "حذف قاعدة البيانات",
+    "@deleteDatabase": {
+        "description": "Action to delete database",
+        "type": "text"
+    },
+    "logOut": "تسجيل الخروج",
+    "@logOut": {
+        "description": "Log out action",
+        "type": "text"
+    },
+    "syncData": "مزامنة البيانات",
+    "@syncData": {
+        "description": "Action to sync data",
+        "type": "text"
+    },
+    "syncInProgress": "جاري المزامنة",
+    "@syncInProgress": {
+        "description": "Status message for sync",
+        "type": "text"
+    },
+    "arabic": "العربية",
+    "@arabic": {
+        "description": "Arabic language option",
+        "type": "text"
+    },
+    "english": "الإنجليزية",
+    "@english": {
+        "description": "English language option",
+        "type": "text"
+    },
+    "tifinagh": "تيفيناغ",
+    "@tifinagh": {
+        "description": "Tifinagh language option",
+        "type": "text"
+    },
+    "spanish": "الإسبانية",
+    "@spanish": {
+        "description": "Spanish language option",
+        "type": "text"
+    },
+    "themeMode": "وضع المظهر",
+    "@themeMode": {
+        "description": "Theme mode selection",
+        "type": "text"
+    },
+    "darkTheme": "مظهر داكن",
+    "@darkTheme": {
+        "description": "Dark theme option",
+        "type": "text"
+    },
+    "lightTheme": "مظهر فاتح",
+    "@lightTheme": {
+        "description": "Light theme option",
+        "type": "text"
+    },
+    "systemTheme": "مظهر النظام",
+    "@systemTheme": {
+        "description": "System theme option",
+        "type": "text"
+    }
+}

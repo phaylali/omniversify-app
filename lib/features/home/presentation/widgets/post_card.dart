@@ -236,7 +236,6 @@ class _PostCardState extends State<PostCard> {
       padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: GestureDetector(
         onTap: () {
-          // TODO: Implement video player
         },
         child: Stack(
           children: [
@@ -265,7 +264,7 @@ class _PostCardState extends State<PostCard> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.7),
+                    color: Colors.black.withValues(alpha: 70),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
@@ -284,7 +283,6 @@ class _PostCardState extends State<PostCard> {
     return Card(
       child: InkWell(
         onTap: () {
-          // TODO: Implement link opening
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -311,7 +309,6 @@ class _PostCardState extends State<PostCard> {
     return Card(
       child: InkWell(
         onTap: () {
-          // TODO: Implement book link opening
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -366,7 +363,6 @@ class _PostCardState extends State<PostCard> {
     return Card(
       child: InkWell(
         onTap: () {
-          // TODO: Implement location opening in maps
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),

@@ -6,8 +6,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter/foundation.dart';
-import '../../../tv/domain/models/channel_model.dart';
+import '../features/channel_model.dart';
 
 class TvPage extends StatefulWidget {
   const TvPage({super.key});
@@ -248,6 +247,7 @@ class _TvPageState extends State<TvPage> {
       }
     } catch (e) {
       if (context.mounted) {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error reading file: ${e.toString()}'),

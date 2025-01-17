@@ -45,10 +45,8 @@ class RepostCard extends StatelessWidget {
                         onSelected: (value) {
                           switch (value) {
                             case 'unfollow':
-                              // TODO: Implement unfollow functionality
                               break;
                             case 'block':
-                              // TODO: Implement block functionality
                               break;
                           }
                         },

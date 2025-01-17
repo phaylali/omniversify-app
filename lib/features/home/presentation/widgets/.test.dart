@@ -1,3 +1,5 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 ResponsiveCardWrapper(
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 16.0),
@@ -9,7 +11,7 @@ ResponsiveCardWrapper(
               TextField(
                 maxLines: 3,
                 decoration: InputDecoration(
-                  hintText: localizer.translate(context, 'whats_on_your_mind'),
+                  hintText: AppLocalizations.of(context)!.whats_on_your_mind,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
@@ -26,7 +28,7 @@ ResponsiveCardWrapper(
                     _buildAttachmentButton(
                       context: context,
                       icon: Icons.image,
-                      label: localizer.translate(context, 'image'),
+                      label: AppLocalizations.of(context)!.image,
                       onTap: () {
                         // Handle image attachment
                       },
@@ -34,7 +36,7 @@ ResponsiveCardWrapper(
                     _buildAttachmentButton(
                       context: context,
                       icon: Icons.videocam,
-                      label: localizer.translate(context, 'video'),
+                      label: AppLocalizations.of(context)!.video,
                       onTap: () {
                         // Handle video attachment
                       },
@@ -42,7 +44,7 @@ ResponsiveCardWrapper(
                     _buildAttachmentButton(
                       context: context,
                       icon: Icons.book,
-                      label: localizer.translate(context, 'book'),
+                      label: AppLocalizations.of(context)!.book,
                       onTap: () {
                         // Handle book attachment
                       },
@@ -50,7 +52,7 @@ ResponsiveCardWrapper(
                     _buildAttachmentButton(
                       context: context,
                       icon: Icons.link,
-                      label: localizer.translate(context, 'link'),
+                      label: AppLocalizations.of(context)!.link,
                       onTap: () {
                         // Handle link attachment
                       },
@@ -58,7 +60,7 @@ ResponsiveCardWrapper(
                     _buildAttachmentButton(
                       context: context,
                       icon: Icons.gif,
-                      label: localizer.translate(context, 'gif'),
+                      label: AppLocalizations.of(context)!.gif,
                       onTap: () {
                         // Handle GIF attachment
                       },
@@ -66,14 +68,14 @@ ResponsiveCardWrapper(
                     _buildAttachmentButton(
                       context: context,
                       icon: Icons.poll,
-                      label: localizer.translate(context, 'poll'),
+                      label: AppLocalizations.of(context)!.poll,
                       onTap: () {
                         // Handle poll creation
                       },
                     ),
                     _buildPostButton(
                       context: context,
-                      label: localizer.translate(context, 'post'),
+                      label: AppLocalizations.of(context)!.post,
                     ),
                   ],
                 ),

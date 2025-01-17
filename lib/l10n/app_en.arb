@@ -1,0 +1,228 @@
+{
+    "@@locale": "en",
+    "app_title": "Omniversify",
+    "@app_title": {
+        "description": "The application title",
+        "type": "text"
+    },
+    "home": "Home",
+    "@home": {
+        "description": "Home navigation label",
+        "type": "text"
+    },
+    "profile": "Profile",
+    "@profile": {
+        "description": "Profile navigation label",
+        "type": "text"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Settings navigation label",
+        "type": "text"
+    },
+    "language": "Language",
+    "@language": {
+        "description": "Language settings option",
+        "type": "text"
+    },
+    "theme": "Theme",
+    "@theme": {
+        "description": "Theme settings option",
+        "type": "text"
+    },
+    "privacy_policy": "Privacy Policy",
+    "@privacy_policy": {
+        "description": "Privacy policy link text",
+        "type": "text"
+    },
+    "licenses": "Licenses",
+    "@licenses": {
+        "description": "Licenses page title",
+        "type": "text"
+    },
+    "exit": "Exit",
+    "@exit": {
+        "description": "Exit button text",
+        "type": "text"
+    },
+    "exit_confirmation": "Are you sure you want to exit?",
+    "@exit_confirmation": {
+        "description": "Exit confirmation dialog message",
+        "type": "text"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Cancel button text",
+        "type": "text"
+    },
+    "scroll": "Scroll",
+    "@scroll": {
+        "description": "Scroll action text",
+        "type": "text"
+    },
+    "open_link": "Open Link",
+    "@open_link": {
+        "description": "Open link button text",
+        "type": "text"
+    },
+    "open_link_confirmation": "Do you want to open this link in your browser?",
+    "@open_link_confirmation": {
+        "description": "Link opening confirmation message",
+        "type": "text"
+    },
+    "tv": "TV",
+    "@tv": {
+        "description": "Television category label",
+        "type": "text"
+    },
+    "save": "Save",
+    "@save": {
+        "description": "Action to save content",
+        "type": "text"
+    },
+    "post": "Post",
+    "@post": {
+        "description": "Social media post action",
+        "type": "text"
+    },
+    "activity": "Activity",
+    "@activity": {
+        "description": "Social activity or event",
+        "type": "text"
+    },
+    "game": "Game",
+    "@game": {
+        "description": "Video game or gaming content",
+        "type": "text"
+    },
+    "audio": "Audio",
+    "@audio": {
+        "description": "Audio content",
+        "type": "text"
+    },
+    "music": "Music",
+    "@music": {
+        "description": "Musical content",
+        "type": "text"
+    },
+    "location": "Location",
+    "@location": {
+        "description": "Geographic location",
+        "type": "text"
+    },
+    "movie": "Movie",
+    "@movie": {
+        "description": "Film content",
+        "type": "text"
+    },
+    "series": "Series",
+    "@series": {
+        "description": "TV or web series content",
+        "type": "text"
+    },
+    "poll": "Poll",
+    "@poll": {
+        "description": "Voting poll",
+        "type": "text"
+    },
+    "gif": "GIF",
+    "@gif": {
+        "description": "Animated GIF image",
+        "type": "text"
+    },
+    "link": "Link",
+    "@link": {
+        "description": "Web link or URL",
+        "type": "text"
+    },
+    "book": "Book",
+    "@book": {
+        "description": "Book content",
+        "type": "text"
+    },
+    "video": "Video",
+    "@video": {
+        "description": "Video content",
+        "type": "text"
+    },
+    "image": "Image",
+    "@image": {
+        "description": "Image content",
+        "type": "text"
+    },
+    "whats_on_your_mind": "What's on your mind?",
+    "@whats_on_your_mind": {
+        "description": "Placeholder text for post creation input",
+        "type": "text"
+    },
+    "clearDatabase": "Clear Database",
+    "@clearDatabase": {
+        "description": "Action to clear database",
+        "type": "text"
+    },
+    "delete": "Delete",
+    "@delete": {
+        "description": "Delete action",
+        "type": "text"
+    },
+    "deleteDatabase": "Delete Database",
+    "@deleteDatabase": {
+        "description": "Action to delete database",
+        "type": "text"
+    },
+    "logOut": "Log Out",
+    "@logOut": {
+        "description": "Log out action",
+        "type": "text"
+    },
+    "syncData": "Sync Data",
+    "@syncData": {
+        "description": "Action to sync data",
+        "type": "text"
+    },
+    "syncInProgress": "Sync in Progress",
+    "@syncInProgress": {
+        "description": "Status message for sync",
+        "type": "text"
+    },
+    "arabic": "Arabic",
+    "@arabic": {
+        "description": "Arabic language option",
+        "type": "text"
+    },
+    "english": "English",
+    "@english": {
+        "description": "English language option",
+        "type": "text"
+    },
+    "tifinagh": "Tifinagh",
+    "@tifinagh": {
+        "description": "Tifinagh language option",
+        "type": "text"
+    },
+    "spanish": "Spanish",
+    "@spanish": {
+        "description": "Spanish language option",
+        "type": "text"
+    },
+    "themeMode": "Theme Mode",
+    "@themeMode": {
+        "description": "Theme mode selection",
+        "type": "text"
+    },
+    "darkTheme": "Dark Theme",
+    "@darkTheme": {
+        "description": "Dark theme option",
+        "type": "text"
+    },
+    "lightTheme": "Light Theme",
+    "@lightTheme": {
+        "description": "Light theme option",
+        "type": "text"
+    },
+    "systemTheme": "System Theme",
+    "@systemTheme": {
+        "description": "System theme option",
+        "type": "text"
+    }
+}

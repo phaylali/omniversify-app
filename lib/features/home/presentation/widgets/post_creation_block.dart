@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/localization/app_localizations.dart';
 import '../../../../shared/widgets/responsive_card_wrapper.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class PostCreationBlock extends ConsumerStatefulWidget {
   const PostCreationBlock({Key? key}) : super(key: key);
 
@@ -94,7 +93,6 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
 
   @override
   Widget build(BuildContext context) {
-    final localizer = ref.read(localizationProvider.notifier);
     final screenHeight = MediaQuery.of(context).size.height;
 
     return ResponsiveCardWrapper(
@@ -117,7 +115,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                   maxLines: null,
                   textAlignVertical: TextAlignVertical.top,
                   decoration: InputDecoration(
-                    hintText: localizer.translate(context, 'whats_on_your_mind'),
+                    hintText: AppLocalizations.of(context)!.whats_on_your_mind,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide.none,
@@ -163,7 +161,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.image,
-                                    label: localizer.translate(context, 'image'),
+                                    label: AppLocalizations.of(context)!.image,
                                     onTap: () {
                                       // Handle image attachment
                                     },
@@ -172,7 +170,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.videocam,
-                                    label: localizer.translate(context, 'video'),
+                                    label: AppLocalizations.of(context)!.video,
                                     onTap: () {
                                       // Handle video attachment
                                     },
@@ -181,7 +179,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.book,
-                                    label: localizer.translate(context, 'book'),
+                                    label: AppLocalizations.of(context)!.book,
                                     onTap: () {
                                       // Handle book attachment
                                     },
@@ -190,7 +188,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.link,
-                                    label: localizer.translate(context, 'link'),
+                                    label: AppLocalizations.of(context)!.link,
                                     onTap: () {
                                       // Handle link attachment
                                     },
@@ -199,7 +197,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.gif,
-                                    label: localizer.translate(context, 'gif'),
+                                    label: AppLocalizations.of(context)!.gif,
                                     onTap: () {
                                       // Handle GIF attachment
                                     },
@@ -208,7 +206,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.poll,
-                                    label: localizer.translate(context, 'poll'),
+                                    label: AppLocalizations.of(context)!.poll,
                                     onTap: () {
                                       // Handle poll creation
                                     },
@@ -217,7 +215,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.tv,
-                                    label: localizer.translate(context, 'series'),
+                                    label: AppLocalizations.of(context)!.series,
                                     onTap: () {
                                       // Handle series attachment
                                     },
@@ -226,7 +224,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.movie,
-                                    label: localizer.translate(context, 'movie'),
+                                    label: AppLocalizations.of(context)!.movie,
                                     onTap: () {
                                       // Handle movie attachment
                                     },
@@ -235,7 +233,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.location_on,
-                                    label: localizer.translate(context, 'location'),
+                                    label: AppLocalizations.of(context)!.location,
                                     onTap: () {
                                       // Handle location attachment
                                     },
@@ -244,7 +242,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.music_note,
-                                    label: localizer.translate(context, 'music'),
+                                    label: AppLocalizations.of(context)!.music,
                                     onTap: () {
                                       // Handle music attachment
                                     },
@@ -253,7 +251,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.mic,
-                                    label: localizer.translate(context, 'audio'),
+                                    label: AppLocalizations.of(context)!.audio,
                                     onTap: () {
                                       // Handle audio attachment
                                     },
@@ -262,7 +260,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.sports_esports,
-                                    label: localizer.translate(context, 'game'),
+                                    label: AppLocalizations.of(context)!.game,
                                     onTap: () {
                                       // Handle game attachment
                                     },
@@ -271,7 +269,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                                   _buildAttachmentButton(
                                     context: context,
                                     icon: Icons.local_activity,
-                                    label: localizer.translate(context, 'activity'),
+                                    label: AppLocalizations.of(context)!.activity,
                                     onTap: () {
                                       // Handle activity attachment
                                     },
@@ -284,7 +282,7 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                         const SizedBox(width: 8),
                         _buildPostButton(
                           context: context,
-                          label: localizer.translate(context, 'post'),
+                          label: AppLocalizations.of(context)!.post,
                         ),
                       ],
                     ),

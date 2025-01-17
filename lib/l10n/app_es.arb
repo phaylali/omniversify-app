@@ -1,0 +1,228 @@
+{
+    "@@locale": "es",
+    "app_title": "Omniversify",
+    "@app_title": {
+        "description": "The application title",
+        "type": "text"
+    },
+    "home": "Inicio",
+    "@home": {
+        "description": "Home navigation label",
+        "type": "text"
+    },
+    "profile": "Perfil",
+    "@profile": {
+        "description": "Profile navigation label",
+        "type": "text"
+    },
+    "settings": "Configuración",
+    "@settings": {
+        "description": "Settings navigation label",
+        "type": "text"
+    },
+    "language": "Idioma",
+    "@language": {
+        "description": "Language settings option",
+        "type": "text"
+    },
+    "theme": "Tema",
+    "@theme": {
+        "description": "Theme settings option",
+        "type": "text"
+    },
+    "privacy_policy": "Política de Privacidad",
+    "@privacy_policy": {
+        "description": "Privacy policy link text",
+        "type": "text"
+    },
+    "licenses": "Licencias",
+    "@licenses": {
+        "description": "Licenses page title",
+        "type": "text"
+    },
+    "exit": "Salir",
+    "@exit": {
+        "description": "Exit button text",
+        "type": "text"
+    },
+    "exit_confirmation": "¿Estás seguro de que quieres salir?",
+    "@exit_confirmation": {
+        "description": "Exit confirmation dialog message",
+        "type": "text"
+    },
+    "cancel": "Cancelar",
+    "@cancel": {
+        "description": "Cancel button text",
+        "type": "text"
+    },
+    "scroll": "Desplazar",
+    "@scroll": {
+        "description": "Scroll action text",
+        "type": "text"
+    },
+    "open_link": "Abrir enlace",
+    "@open_link": {
+        "description": "Open link button text",
+        "type": "text"
+    },
+    "open_link_confirmation": "¿Quieres abrir este enlace en tu navegador?",
+    "@open_link_confirmation": {
+        "description": "Link opening confirmation message",
+        "type": "text"
+    },
+    "tv": "Televisión",
+    "@tv": {
+        "description": "Television category label",
+        "type": "text"
+    },
+    "save": "Guardar",
+    "@save": {
+        "description": "Action to save content",
+        "type": "text"
+    },
+    "post": "Publicar",
+    "@post": {
+        "description": "Social media post action",
+        "type": "text"
+    },
+    "activity": "Actividad",
+    "@activity": {
+        "description": "Social activity or event",
+        "type": "text"
+    },
+    "game": "Juego",
+    "@game": {
+        "description": "Video game or gaming content",
+        "type": "text"
+    },
+    "audio": "Audio",
+    "@audio": {
+        "description": "Audio content",
+        "type": "text"
+    },
+    "music": "Música",
+    "@music": {
+        "description": "Musical content",
+        "type": "text"
+    },
+    "location": "Ubicación",
+    "@location": {
+        "description": "Geographic location",
+        "type": "text"
+    },
+    "movie": "Película",
+    "@movie": {
+        "description": "Film content",
+        "type": "text"
+    },
+    "series": "Serie",
+    "@series": {
+        "description": "TV or web series content",
+        "type": "text"
+    },
+    "poll": "Encuesta",
+    "@poll": {
+        "description": "Voting poll",
+        "type": "text"
+    },
+    "gif": "GIF",
+    "@gif": {
+        "description": "Animated GIF image",
+        "type": "text"
+    },
+    "link": "Enlace",
+    "@link": {
+        "description": "Web link or URL",
+        "type": "text"
+    },
+    "book": "Libro",
+    "@book": {
+        "description": "Book content",
+        "type": "text"
+    },
+    "video": "Video",
+    "@video": {
+        "description": "Video content",
+        "type": "text"
+    },
+    "image": "Imagen",
+    "@image": {
+        "description": "Image content",
+        "type": "text"
+    },
+    "whats_on_your_mind": "¿Qué estás pensando?",
+    "@whats_on_your_mind": {
+        "description": "Placeholder text for post creation input",
+        "type": "text"
+    },
+    "clearDatabase": "Limpiar Base de Datos",
+    "@clearDatabase": {
+        "description": "Action to clear database",
+        "type": "text"
+    },
+    "delete": "Eliminar",
+    "@delete": {
+        "description": "Delete action",
+        "type": "text"
+    },
+    "deleteDatabase": "Eliminar Base de Datos",
+    "@deleteDatabase": {
+        "description": "Action to delete database",
+        "type": "text"
+    },
+    "logOut": "Cerrar Sesión",
+    "@logOut": {
+        "description": "Log out action",
+        "type": "text"
+    },
+    "syncData": "Sincronizar Datos",
+    "@syncData": {
+        "description": "Action to sync data",
+        "type": "text"
+    },
+    "syncInProgress": "Sincronización en Progreso",
+    "@syncInProgress": {
+        "description": "Status message for sync",
+        "type": "text"
+    },
+    "arabic": "Árabe",
+    "@arabic": {
+        "description": "Arabic language option",
+        "type": "text"
+    },
+    "english": "Inglés",
+    "@english": {
+        "description": "English language option",
+        "type": "text"
+    },
+    "tifinagh": "Tifinagh",
+    "@tifinagh": {
+        "description": "Tifinagh language option",
+        "type": "text"
+    },
+    "spanish": "Español",
+    "@spanish": {
+        "description": "Spanish language option",
+        "type": "text"
+    },
+    "themeMode": "Modo de Tema",
+    "@themeMode": {
+        "description": "Theme mode selection",
+        "type": "text"
+    },
+    "darkTheme": "Tema Oscuro",
+    "@darkTheme": {
+        "description": "Dark theme option",
+        "type": "text"
+    },
+    "lightTheme": "Tema Claro",
+    "@lightTheme": {
+        "description": "Light theme option",
+        "type": "text"
+    },
+    "systemTheme": "Tema del Sistema",
+    "@systemTheme": {
+        "description": "System theme option",
+        "type": "text"
+    }
+}

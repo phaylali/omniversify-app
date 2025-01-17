@@ -3,10 +3,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/localization/app_localizations.dart';
-import '../../../shared/widgets/fab_menu.dart';
-import '../../../shared/widgets/app_drawer.dart';
-
+import '../shared/widgets/fab_menu.dart';
+import '../shared/widgets/app_drawer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DoomScrollScreen extends ConsumerStatefulWidget {
   const DoomScrollScreen({super.key});
 
@@ -129,7 +128,7 @@ class _DoomScrollScreenState extends ConsumerState<DoomScrollScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizer = ref.read(localizationProvider.notifier);
+    //final localizer = ref.read(localeProvider.notifier);
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -138,7 +137,7 @@ class _DoomScrollScreenState extends ConsumerState<DoomScrollScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(localizer.translate(context, 'doom_scroll')),
+        title: Text( AppLocalizations.of(context)!.scroll),
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {

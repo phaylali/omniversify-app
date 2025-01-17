@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/localization/app_localizations.dart';
-import '../../../shared/widgets/fab_menu.dart';
-import '../../../shared/widgets/app_drawer.dart';
-
+import '../shared/widgets/fab_menu.dart';
+import '../shared/widgets/app_drawer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -16,7 +15,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizer = ref.read(localizationProvider.notifier);
 
     return Scaffold(
       key: _scaffoldKey,
@@ -30,7 +28,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             elevation: 0,
             centerTitle: true,
             title: Text(
-              localizer.translate(context, 'profile'),
+               AppLocalizations.of(context)!.profile,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),

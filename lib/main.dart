@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'providers/theme_provider.dart';
+import 'router.dart';
 
-import 'core/routing/app_router.dart';
-import 'core/theme/app_themes.dart';
-import 'core/localization/app_localizations.dart';
+// Providers
+final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((ref) {
+  return ThemeNotifier();
+});
+
+final localeProvider = StateNotifierProvider<LocaleNotifier, Locale>((ref) {
+  return LocaleNotifier();
+});
+
 
 void main() {
-  // Initialize media_kit
+  
   MediaKit.ensureInitialized();
 
   runApp(
@@ -23,26 +32,24 @@ class SocialMediaApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
-    final theme = ref.watch(themeProvider);
-    final locale = ref.watch(localizationProvider);
+    
+    final themeMode = ref.watch(themeProvider);
+    final locale = ref.watch(localeProvider);
 
     return MaterialApp.router(
       title: 'Omniversify',
-      theme: theme,
-      routerConfig: router,
-
-      // Localization configuration
-      locale: locale,
-      supportedLocales: AppLocalizations.supportedLocales.values.toList(),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-
-      // Debugging banner
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      routerConfig: router,
+      themeMode: themeMode,
+      theme: ThemeData.light().copyWith(
+        textTheme: GoogleFonts.tajawalTextTheme(ThemeData.light().textTheme),
+      ),
+      darkTheme: ThemeData.dark().copyWith(
+        textTheme: GoogleFonts.tajawalTextTheme(ThemeData.dark().textTheme),
+      ),
+      locale: locale,
     );
   }
 }

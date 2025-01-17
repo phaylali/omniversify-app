@@ -80,13 +80,10 @@ class QuoteCard extends StatelessWidget {
             onSelected: (value) {
               switch (value) {
                 case 'report':
-                  // TODO: Implement report functionality
                   break;
                 case 'unfollow':
-                  // TODO: Implement unfollow functionality
                   break;
                 case 'block':
-                  // TODO: Implement block functionality
                   break;
               }
             },

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/localization/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class TabReorderDialog extends ConsumerStatefulWidget {
   final List<String> tabs;
@@ -28,7 +29,6 @@ class _TabReorderDialogState extends ConsumerState<TabReorderDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final localizer = ref.read(localizationProvider.notifier);
 
     return Dialog(
       child: Padding(
@@ -64,7 +64,7 @@ class _TabReorderDialogState extends ConsumerState<TabReorderDialog> {
                     ),
                     child: ListTile(
                       leading: const Icon(Icons.drag_handle),
-                      title: Text(localizer.translate(context, tab)),
+                      title: Text(tab),
                     ),
                   );
                 }).toList(),
@@ -85,7 +85,7 @@ class _TabReorderDialogState extends ConsumerState<TabReorderDialog> {
               children: [
                 TextButton(
                   onPressed: () => context.pop(),
-                  child: Text(localizer.translate(context, 'cancel')),
+                  child: Text(AppLocalizations.of(context)!.cancel),
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton(
@@ -93,7 +93,7 @@ class _TabReorderDialogState extends ConsumerState<TabReorderDialog> {
                     widget.onSave(_reorderedTabs);
                     context.pop();
                   },
-                  child: Text(localizer.translate(context, 'save')),
+                  child: Text(AppLocalizations.of(context)!.save),
                 ),
               ],
             ),

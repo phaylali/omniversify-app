@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../features/tv/domain/models/channel_model.dart';
+import 'channel_model.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

@@ -4,8 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../core/localization/app_localizations.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AppDrawer extends ConsumerStatefulWidget {
   const AppDrawer({
     super.key,
@@ -36,7 +35,6 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final localizer = ref.read(localizationProvider.notifier);
     
     return Drawer(
       child: ListView(
@@ -65,7 +63,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.home),
-            title: Text(localizer.translate(context, 'home')),
+            title: Text( AppLocalizations.of(context)!.home),
             onTap: () {
               widget.scaffoldKey.currentState?.closeDrawer();
               context.go('/');
@@ -73,7 +71,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.settings),
-            title: Text(localizer.translate(context, 'settings')),
+            title: Text( AppLocalizations.of(context)!.settings),
             onTap: () {
               widget.scaffoldKey.currentState?.closeDrawer();
               context.go('/settings');
@@ -81,15 +79,15 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.screen_lock_landscape),
-            title: Text(localizer.translate(context, 'doom_scroll')),
+            title: Text( AppLocalizations.of(context)!.scroll),
             onTap: () {
               widget.scaffoldKey.currentState?.closeDrawer();
-              context.go('/doom-scroll');
+              context.go('/scroll');
             },
           ),
           ListTile(
             leading: const Icon(Icons.tv),
-            title: Text(localizer.translate(context, 'tv')),
+            title: Text( AppLocalizations.of(context)!.tv),
             onTap: () {
               widget.scaffoldKey.currentState?.closeDrawer();
               context.go('/tv');
@@ -98,23 +96,23 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
-            title: Text(localizer.translate(context, 'privacy_policy')),
+            title: Text( AppLocalizations.of(context)!.privacy_policy),
             onTap: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text(localizer.translate(context, 'open_link')),
-                    content: Text(localizer.translate(context, 'open_link_confirmation')),
+                    title: Text( AppLocalizations.of(context)!.open_link),
+                    content: Text( AppLocalizations.of(context)!.open_link_confirmation),
                     actions: <Widget>[
                       TextButton(
-                        child: Text(localizer.translate(context, 'cancel')),
+                        child: Text( AppLocalizations.of(context)!.cancel),
                         onPressed: () {
                           context.pop();
                         },
                       ),
                       TextButton(
-                        child: Text(localizer.translate(context, 'open_link')),
+                        child: Text( AppLocalizations.of(context)!.open_link),
                         onPressed: () {
                           
                           launchUrl(
@@ -131,11 +129,11 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.description_outlined),
-            title: Text(localizer.translate(context, 'licenses')),
+            title: Text(AppLocalizations.of(context)!.licenses),
             onTap: () {
               showLicensePage(
                 context: context,
-                applicationName: localizer.translate(context, 'app_title'),
+                applicationName: AppLocalizations.of(context)!.app_title,
                 applicationVersion: _packageInfo?.version ?? '',
               );
             },
@@ -143,23 +141,23 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
-            title: Text(localizer.translate(context, 'exit')),
+            title: Text(AppLocalizations.of(context)!.exit),
             onTap: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text(localizer.translate(context, 'exit')),
-                    content: Text(localizer.translate(context, 'exit_confirmation')),
+                    title: Text(AppLocalizations.of(context)!.exit),
+                    content: Text(AppLocalizations.of(context)!.exit_confirmation),
                     actions: <Widget>[
                       TextButton(
-                        child: Text(localizer.translate(context, 'cancel')),
+                        child: Text(AppLocalizations.of(context)!.cancel),
                         onPressed: () {
                           context.pop();
                         },
                       ),
                       TextButton(
-                        child: Text(localizer.translate(context, 'exit')),
+                        child: Text(AppLocalizations.of(context)!.exit),
                         onPressed: () {
                           context.pop();
                           SystemNavigator.pop();

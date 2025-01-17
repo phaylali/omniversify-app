@@ -1,0 +1,233 @@
+{
+    "@@locale": "zgh",
+    "app_title": "ⵓⵎⵏⵉⴼⵉⵔⵙⵉⴼⵢ",
+    "@app_title": {
+        "description": "The application title",
+        "type": "text"
+    },
+    "home": "ⵜⴰⴷⴷⴰⵔⵜ",
+    "@home": {
+        "description": "Home navigation label",
+        "type": "text"
+    },
+    "profile": "ⴰⵎⵍⵢ",
+    "@profile": {
+        "description": "Profile navigation label",
+        "type": "text"
+    },
+    "settings": "ⵜⵉⵙⵖⴰⵍ",
+    "@settings": {
+        "description": "Settings navigation label",
+        "type": "text"
+    },
+    "language": "ⵜⵓⵜⵍⴰⵢⵜ",
+    "@language": {
+        "description": "Language settings option",
+        "type": "text"
+    },
+    "theme": "ⴰⵙⴽⴽⵉⴼ",
+    "@theme": {
+        "description": "Theme settings option",
+        "type": "text"
+    },
+    "privacy_policy": "ⵜⴰⵙⵔⵜⵉⵜ ⵏ ⵜⵉⵏⵏⵓⵜⵍⴰ",
+    "@privacy_policy": {
+        "description": "Privacy policy link text",
+        "type": "text"
+    },
+    "cancel": "ⵙⵔ",
+    "@cancel": {
+        "description": "Cancel button text",
+        "type": "text"
+    },
+    "ok": "ⵡⴰⵅⵅⴰ",
+    "@ok": {
+        "description": "OK button text",
+        "type": "text"
+    },
+    "save": "ⵅⴼⴹ",
+    "@save": {
+        "description": "Save button text",
+        "type": "text"
+    },
+    "scroll": "ⵙⵙⵉⴷⵉ",
+    "@scroll": {
+        "description": "Scroll action text",
+        "type": "text"
+    },
+    "open_link": "ⵕⵥⵎ ⴰⵙⵖⵏ",
+    "@open_link": {
+        "description": "Open link button text",
+        "type": "text"
+    },
+    "open_link_confirmation": "ⵉⵙ ⵜⵔⵉⴷ ⴰⴷ ⵜⵕⵥⵎⴷ ⴰⵙⵖⵏ ⴰⴷ ⴳ ⵓⵎⵙⵙⴰⵔⴰ?",
+    "@open_link_confirmation": {
+        "description": "Link opening confirmation message",
+        "type": "text"
+    },
+    "tv": "ⵜⵉⵍⵉⴼⵉⵣⵢⵓⵏ",
+    "@tv": {
+        "description": "Television category label",
+        "type": "text"
+    },
+    "licenses": "ⵜⵓⵔⴰⴳⵉⵏ",
+    "@licenses": {
+        "description": "Licenses page title",
+        "type": "text"
+    },
+    "exit": "ⴼⴼⵖ",
+    "@exit": {
+        "description": "Exit button text",
+        "type": "text"
+    },
+    "exit_confirmation": "ⵉⵙ ⵜⵔⵉⴷ ⴰⴷ ⵜⴼⴼⵖⴷ?",
+    "@exit_confirmation": {
+        "description": "Exit confirmation dialog message",
+        "type": "text"
+    },
+    "post": "ⴰⵣⵏ",
+    "@post": {
+        "description": "Social media post action",
+        "type": "text"
+    },
+    "activity": "ⵜⴰⵎⵙⵙⵓⵔⵜ",
+    "@activity": {
+        "description": "Social activity or event",
+        "type": "text"
+    },
+    "game": "ⵓⵔⴰⵔ",
+    "@game": {
+        "description": "Video game or gaming content",
+        "type": "text"
+    },
+    "audio": "ⵉⵎⵙⵍⵉ",
+    "@audio": {
+        "description": "Audio content",
+        "type": "text"
+    },
+    "music": "ⵓⵔⴰⵔ",
+    "@music": {
+        "description": "Musical content",
+        "type": "text"
+    },
+    "location": "ⴰⴷⵖⴰⵔ",
+    "@location": {
+        "description": "Geographic location",
+        "type": "text"
+    },
+    "movie": "ⴰⵙⵍⵎⴷ",
+    "@movie": {
+        "description": "Film content",
+        "type": "text"
+    },
+    "series": "ⵜⵉⵣⵍⴰⵜⵉⵏ",
+    "@series": {
+        "description": "TV or web series content",
+        "type": "text"
+    },
+    "poll": "ⴰⵙⵉⴳⴳⵍ",
+    "@poll": {
+        "description": "Voting poll",
+        "type": "text"
+    },
+    "gif": "ⵜⴰⵡⵍⴰⴼⵜ",
+    "@gif": {
+        "description": "Animated GIF image",
+        "type": "text"
+    },
+    "link": "ⴰⵣⴷⴰⵢ",
+    "@link": {
+        "description": "Web link or URL",
+        "type": "text"
+    },
+    "book": "ⴰⴷⵍⵉⵙ",
+    "@book": {
+        "description": "Book content",
+        "type": "text"
+    },
+    "video": "ⴰⵒⵉⴷⵢⵓ",
+    "@video": {
+        "description": "Video content",
+        "type": "text"
+    },
+    "image": "ⵜⴰⵡⵍⴰⴼⵜ",
+    "@image": {
+        "description": "Image content",
+        "type": "text"
+    },
+    "whats_on_your_mind": "ⵎⴰ ⵜⵜⵅⵎⵎⴰⵎⴷ?",
+    "@whats_on_your_mind": {
+        "description": "Placeholder text for post creation input",
+        "type": "text"
+    },
+    "clearDatabase": "ⵙⴼⴹ ⵜⴰⵙⵏⴰⵜ",
+    "@clearDatabase": {
+        "description": "Action to clear database",
+        "type": "text"
+    },
+    "delete": "ⴽⴽⵙ",
+    "@delete": {
+        "description": "Delete action",
+        "type": "text"
+    },
+    "deleteDatabase": "ⴽⴽⵙ ⵜⴰⵙⵏⴰⵜ",
+    "@deleteDatabase": {
+        "description": "Action to delete database",
+        "type": "text"
+    },
+    "logOut": "ⴼⴼⵖ",
+    "@logOut": {
+        "description": "Log out action",
+        "type": "text"
+    },
+    "syncData": "ⵙⵎⵙⴰⵙⴰ ⵉⵙⴼⴽⴰ",
+    "@syncData": {
+        "description": "Action to sync data",
+        "type": "text"
+    },
+    "syncInProgress": "ⴰⵙⵎⵙⴰⵙⴰ ⵉⵜⵜⴷⴷⵓ",
+    "@syncInProgress": {
+        "description": "Status message for sync",
+        "type": "text"
+    },
+    "arabic": "ⵜⴰⵄⵔⴰⴱⵜ",
+    "@arabic": {
+        "description": "Arabic language option",
+        "type": "text"
+    },
+    "english": "ⵜⴰⵏⴳⵍⵉⵣⵜ",
+    "@english": {
+        "description": "English language option",
+        "type": "text"
+    },
+    "tifinagh": "ⵜⵉⴼⵉⵏⴰⵖ",
+    "@tifinagh": {
+        "description": "Tifinagh language option",
+        "type": "text"
+    },
+    "spanish": "ⵜⴰⵙⴱⵏⵢⵓⵍⵜ",
+    "@spanish": {
+        "description": "Spanish language option",
+        "type": "text"
+    },
+    "themeMode": "ⴰⵏⴰⵡ ⵏ ⵓⵣⴷⴰⵢ",
+    "@themeMode": {
+        "description": "Theme mode selection",
+        "type": "text"
+    },
+    "darkTheme": "ⴰⵣⴷⴰⵢ ⵉⴱⵔⴽⴰⵏ",
+    "@darkTheme": {
+        "description": "Dark theme option",
+        "type": "text"
+    },
+    "lightTheme": "ⴰⵣⴷⴰⵢ ⵉⵎⵍⵓⵍⵏ",
+    "@lightTheme": {
+        "description": "Light theme option",
+        "type": "text"
+    },
+    "systemTheme": "ⴰⵣⴷⴰⵢ ⵏ ⵓⵙⵏⴰⵍ",
+    "@systemTheme": {
+        "description": "System theme option",
+        "type": "text"
+    }
+}
