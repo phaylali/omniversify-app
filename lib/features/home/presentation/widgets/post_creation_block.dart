@@ -1,52 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../providers/post_cration_provider.dart';
 import '../../../../shared/widgets/responsive_card_wrapper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-class PostCreationBlock extends ConsumerStatefulWidget {
+
+class PostCreationBlock extends ConsumerWidget {
   const PostCreationBlock({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<PostCreationBlock> createState() => _PostCreationBlockState();
-}
-
-class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
-  final TextEditingController _textController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
-  bool _isExpanded = false;
-  final ScrollController _scrollController = ScrollController();
-  double _dragStartX = 0;
-  double _scrollStartPosition = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode.addListener(_onFocusChange);
-    _textController.addListener(_onTextChange);
-  }
-
-  @override
-  void dispose() {
-    _focusNode.removeListener(_onFocusChange);
-    _textController.removeListener(_onTextChange);
-    _focusNode.dispose();
-    _textController.dispose();
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _onFocusChange() {
-    if (!_focusNode.hasFocus && _textController.text.isEmpty) {
-      setState(() => _isExpanded = false);
-    }
-  }
-
-  void _onTextChange() {
-    if (_textController.text.isNotEmpty && !_isExpanded) {
-      setState(() => _isExpanded = true);
-    }
-  }
-
-  Widget _buildAttachmentButton({
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(postCreationProvider);
+    //final notifier = ref.read(postCreationProvider.notifier);
+    
+    final screenHeight = MediaQuery.of(context).size.height;
+Widget buildAttachmentButton({
     required BuildContext context,
     required IconData icon,
     required String label,
@@ -65,19 +32,19 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
     );
   }
 
-  Widget _buildPostButton({
+  Widget buildPostButton({
     required BuildContext context,
     required String label,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 2),
       child: Tooltip(
         message: label,
         child: IconButton(
-          onPressed: _textController.text.isEmpty ? null : () {
+          onPressed: () {
             // Handle post creation
-            _textController.clear();
-            setState(() => _isExpanded = false);
+            state.textController.clear();
+            
           },
           icon: const Icon(Icons.send, size: 20),
           style: IconButton.styleFrom(
@@ -90,10 +57,6 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
       ),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return ResponsiveCardWrapper(
       child: Card(
@@ -110,8 +73,8 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                   maxHeight: screenHeight * 0.5,
                 ),
                 child: TextField(
-                  controller: _textController,
-                  focusNode: _focusNode,
+                  controller: state.textController,
+                  focusNode: state.focusNode,
                   maxLines: null,
                   textAlignVertical: TextAlignVertical.top,
                   decoration: InputDecoration(
@@ -126,168 +89,148 @@ class _PostCreationBlockState extends ConsumerState<PostCreationBlock> {
                   ),
                 ),
               ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                height: _isExpanded ? null : 0,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 8),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onPanStart: (details) {
-                              _dragStartX = details.localPosition.dx;
-                              _scrollStartPosition = _scrollController.offset;
-                            },
-                            onPanUpdate: (details) {
-                              final dx = details.localPosition.dx - _dragStartX;
-                              final newOffset = _scrollStartPosition - dx;
-                              _scrollController.jumpTo(
-                                newOffset.clamp(
-                                  0,
-                                  _scrollController.position.maxScrollExtent,
-                                ),
-                              );
-                            },
-                            child: SizedBox(
-                              height: 48,
-                              child: ListView(
-                                controller: _scrollController,
-                                scrollDirection: Axis.horizontal,
-                                physics: const NeverScrollableScrollPhysics(),
-                                children: [
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.image,
-                                    label: AppLocalizations.of(context)!.image,
-                                    onTap: () {
-                                      // Handle image attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.videocam,
-                                    label: AppLocalizations.of(context)!.video,
-                                    onTap: () {
-                                      // Handle video attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.book,
-                                    label: AppLocalizations.of(context)!.book,
-                                    onTap: () {
-                                      // Handle book attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.link,
-                                    label: AppLocalizations.of(context)!.link,
-                                    onTap: () {
-                                      // Handle link attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.gif,
-                                    label: AppLocalizations.of(context)!.gif,
-                                    onTap: () {
-                                      // Handle GIF attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.poll,
-                                    label: AppLocalizations.of(context)!.poll,
-                                    onTap: () {
-                                      // Handle poll creation
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.tv,
-                                    label: AppLocalizations.of(context)!.series,
-                                    onTap: () {
-                                      // Handle series attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.movie,
-                                    label: AppLocalizations.of(context)!.movie,
-                                    onTap: () {
-                                      // Handle movie attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.location_on,
-                                    label: AppLocalizations.of(context)!.location,
-                                    onTap: () {
-                                      // Handle location attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.music_note,
-                                    label: AppLocalizations.of(context)!.music,
-                                    onTap: () {
-                                      // Handle music attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.mic,
-                                    label: AppLocalizations.of(context)!.audio,
-                                    onTap: () {
-                                      // Handle audio attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.sports_esports,
-                                    label: AppLocalizations.of(context)!.game,
-                                    onTap: () {
-                                      // Handle game attachment
-                                    },
-                                  ),
-                                  const SizedBox(width: 2),
-                                  _buildAttachmentButton(
-                                    context: context,
-                                    icon: Icons.local_activity,
-                                    label: AppLocalizations.of(context)!.activity,
-                                    onTap: () {
-                                      // Handle activity attachment
-                                    },
-                                  ),
-                                ],
+              Column(
+                children: [
+                  const SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 130,
+                          child: Wrap(direction: Axis.horizontal,
+                            //controller: _scrollController,
+                            //scrollDirection: Axis.horizontal,
+                           // physics: const NeverScrollableScrollPhysics(),
+                            children: [
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.image,
+                                label: AppLocalizations.of(context)!.image,
+                                onTap: () {
+                                  // Handle image attachment
+                                },
                               ),
-                            ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.videocam,
+                                label: AppLocalizations.of(context)!.video,
+                                onTap: () {
+                                  // Handle video attachment
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.book,
+                                label: AppLocalizations.of(context)!.book,
+                                onTap: () {
+                                  // Handle book attachment
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.link,
+                                label: AppLocalizations.of(context)!.link,
+                                onTap: () {
+                                  // Handle link attachment
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.gif,
+                                label: AppLocalizations.of(context)!.gif,
+                                onTap: () {
+                                  // Handle GIF attachment
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.poll,
+                                label: AppLocalizations.of(context)!.poll,
+                                onTap: () {
+                                  // Handle poll creation
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.tv,
+                                label: AppLocalizations.of(context)!.series,
+                                onTap: () {
+                                  // Handle series attachment
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.movie,
+                                label: AppLocalizations.of(context)!.movie,
+                                onTap: () {
+                                  // Handle movie attachment
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.location_on,
+                                label: AppLocalizations.of(context)!.location,
+                                onTap: () {
+                                  // Handle location attachment
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.music_note,
+                                label: AppLocalizations.of(context)!.music,
+                                onTap: () {
+                                  // Handle music attachment
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.mic,
+                                label: AppLocalizations.of(context)!.audio,
+                                onTap: () {
+                                  // Handle audio attachment
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.sports_esports,
+                                label: AppLocalizations.of(context)!.game,
+                                onTap: () {
+                                  // Handle game attachment
+                                },
+                              ),
+                              const SizedBox(width: 2),
+                              buildAttachmentButton(
+                                context: context,
+                                icon: Icons.local_activity,
+                                label: AppLocalizations.of(context)!.activity,
+                                onTap: () {
+                                  // Handle activity attachment
+                                },
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        _buildPostButton(
-                          context: context,
-                          label: AppLocalizations.of(context)!.post,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      const SizedBox(width: 8,),
+                      buildPostButton(
+                        context: context,
+                        label: AppLocalizations.of(context)!.post,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
