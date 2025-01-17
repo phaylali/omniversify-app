@@ -229,5 +229,20 @@
     "@systemTheme": {
         "description": "System theme option",
         "type": "text"
+    },
+    "username": "ⵉⵙⵎ ⵏ ⵓⵙⵎⵔⵙ",
+    "@username": {
+      "description": "Username input field",
+      "type": "text"
+    },
+    "password": "ⵜⴰⴳⵓⵔⵉ ⵏ ⵓⵣⵔⴰⵢ",
+    "@password": {
+      "description": "Password input field",
+      "type": "text"
+    },
+    "signIn": "ⴽⵛⵎ",
+    "@signIn": {
+      "description": "Sign in action button",
+      "type": "text"
     }
 }

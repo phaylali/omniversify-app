@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:social_media_app/pages/login.dart';
 
 import 'pages/doom_scroll_screen.dart';
 import 'pages/home_screen.dart';
@@ -7,11 +8,15 @@ import 'pages/settings_screen.dart';
 import 'pages/tv_page.dart';
 
 final router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/login',
   routes: [
     GoRoute(
       path: '/',
       builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginPage(),
     ),
     GoRoute(
       path: '/settings',

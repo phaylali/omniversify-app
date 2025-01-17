@@ -224,5 +224,20 @@
     "@systemTheme": {
         "description": "System theme option",
         "type": "text"
+    },
+    "username": "Username",
+    "@username": {
+      "description": "Username input field",
+      "type": "text"
+    },
+    "password": "Password",
+    "@password": {
+      "description": "Password input field",
+      "type": "text"
+    },
+    "signIn": "Sign In",
+    "@signIn": {
+      "description": "Sign in action button",
+      "type": "text"
     }
 }
