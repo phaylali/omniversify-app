@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fab_circular_menu_plus/fab_circular_menu_plus.dart';
+import 'package:go_router/go_router.dart';
 
 class FABMENU extends StatelessWidget {
   const FABMENU({
     super.key,
     required this.scaffoldKey,
-    
     required this.icon1,
     required this.icon2,
     required this.icon3,
@@ -16,7 +16,7 @@ class FABMENU extends StatelessWidget {
   });
 
   final GlobalKey<ScaffoldState> scaffoldKey;
-  
+
   final IconData icon1;
   final IconData icon2;
   final IconData icon3;
@@ -38,42 +38,38 @@ class FABMENU extends StatelessWidget {
       fabCloseColor: Theme.of(context).primaryColor,
       children: <Widget>[
         IconButton(
-          icon: Icon(icon1),
-          tooltip: tooltip1,
-          onPressed: () {
-            if (kDebugMode) {
-              print(tooltip1);
-            }
-          }
-        ),
+            icon: Icon(icon1),
+            tooltip: tooltip1,
+            onPressed: () {
+              if (kDebugMode) {
+                print(tooltip1);
+              }
+            }),
         IconButton(
-          icon: Icon(icon2),
-          tooltip: tooltip2,
-          onPressed: () {
-            if (kDebugMode) {
-              print(tooltip2);
-            }
-          }
-        ),
+            icon: Icon(icon2),
+            tooltip: tooltip2,
+            onPressed: () {
+              if (kDebugMode) {
+                print(tooltip2);
+              }
+            }),
         IconButton(
-          icon: Icon(icon3),
-          tooltip: tooltip3,
-          onPressed: () {
-            if (kDebugMode) {
-              print(tooltip3);
-            }
-          }
-        ),
+            icon: Icon(icon3),
+            tooltip: tooltip3,
+            onPressed: () {
+              if (kDebugMode) {
+                context.go('/');
+              }
+            }),
         IconButton(
-          icon: const Icon(Icons.settings),
-          tooltip: 'Settings',
-          onPressed: () {
-            if (kDebugMode) {
-              print('Settings');
-            }
-            scaffoldKey.currentState?.openDrawer();
-          }
-        )
+            icon: const Icon(Icons.settings),
+            tooltip: 'Settings',
+            onPressed: () {
+              if (kDebugMode) {
+                print('Settings');
+              }
+              scaffoldKey.currentState?.openDrawer();
+            })
       ],
     );
   }

@@ -239,5 +239,20 @@
     "@signIn": {
       "description": "Sign in action button",
       "type": "text"
+    },
+    "dialogLabel": "مربع حوار",
+    "@dialogLabel": {
+      "description": "Dialog box label",
+      "type": "text"
+    },
+    "alertDialogLabel": "تنبيه",
+    "@alertDialogLabel": {
+      "description": "Alert dialog label",
+      "type": "text"
+    },
+    "searchFieldLabel": "بحث",
+    "@searchFieldLabel": {
+      "description": "Search field label",
+      "type": "text"
     }
 }

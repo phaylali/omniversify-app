@@ -244,5 +244,65 @@
     "@signIn": {
       "description": "Sign in action button",
       "type": "text"
+    },
+    "dialogLabel": "ⴰⵎⵙⴰⵡⴰⵍ",
+    "@dialogLabel": {
+      "description": "Dialog box label",
+      "type": "text"
+    },
+    "alertDialogLabel": "ⴰⵏⵙⵉⵅⴼ",
+    "@alertDialogLabel": {
+      "description": "Alert dialog label",
+      "type": "text"
+    },
+    "searchFieldLabel": "ⵔⵣⵓ",
+    "@searchFieldLabel": {
+      "description": "Search field label",
+      "type": "text"
+    },
+    "closeButtonLabel": "ⵔⴳⵍ",
+    "@closeButtonLabel": {
+      "description": "Close button label",
+      "type": "text"
+    },
+    "backButtonTooltip": "ⵓⵖⵓⵍ",
+    "@backButtonTooltip": {
+      "description": "Back button tooltip",
+      "type": "text"
+    },
+    "cancelButtonLabel": "ⵙⵔ",
+    "@cancelButtonLabel": {
+      "description": "Cancel button label",
+      "type": "text"
+    },
+    "nextButtonLabel": "ⵓⵣⵣⵍ",
+    "@nextButtonLabel": {
+      "description": "Next button label",
+      "type": "text"
+    },
+    "previousButtonLabel": "ⵓⵖⵓⵍ",
+    "@previousButtonLabel": {
+      "description": "Previous button label",
+      "type": "text"
+    },
+    "selectAllButtonLabel": "ⴼⵔⵏ ⵎⴰⵕⵕⴰ",
+    "@selectAllButtonLabel": {
+      "description": "Select all button label",
+      "type": "text"
+    },
+    "datePickerHelpText": "ⴼⵔⵏ ⴰⵙⴰⴽⵓⴷ",
+    "@datePickerHelpText": {
+      "description": "Date picker help text",
+      "type": "text"
+    },
+    "timePickerHourLabel": "ⵜⴰⵙⵔⴰⴳⵜ",
+    "@timePickerHourLabel": {
+      "description": "Time picker hour label",
+      "type": "text"
+    },
+    "timePickerMinuteLabel": "ⵜⵓⵙⴷⵉⴷⵜ",
+    "@timePickerMinuteLabel": {
+      "description": "Time picker minute label",
+      "type": "text"
     }
 }

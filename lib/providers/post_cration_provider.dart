@@ -31,7 +31,7 @@ class PostCreationNotifier extends StateNotifier<PostCreationState> {
           textController: TextEditingController(),
           focusNode: FocusNode(),
 
-        )) {}
+        ));
 
 
 

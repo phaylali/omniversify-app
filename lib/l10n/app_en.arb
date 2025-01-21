@@ -239,5 +239,20 @@
     "@signIn": {
       "description": "Sign in action button",
       "type": "text"
+    },
+    "dialogLabel": "Dialog",
+    "@dialogLabel": {
+      "description": "Dialog box label",
+      "type": "text"
+    },
+    "alertDialogLabel": "Alert",
+    "@alertDialogLabel": {
+      "description": "Alert dialog label",
+      "type": "text"
+    },
+    "searchFieldLabel": "Search",
+    "@searchFieldLabel": {
+      "description": "Search field label",
+      "type": "text"
     }
 }

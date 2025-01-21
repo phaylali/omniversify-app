@@ -3,9 +3,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../l10n/app_localizations.dart';
 import '../shared/widgets/fab_menu.dart';
 import '../shared/widgets/app_drawer.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DoomScrollScreen extends ConsumerStatefulWidget {
   const DoomScrollScreen({super.key});
 

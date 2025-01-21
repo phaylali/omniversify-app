@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'core/omniversify_cupertino_localizations.dart';
+import 'core/omniversify_material_localizations.dart';
+import 'core/omniversify_widgets_localizations.dart';
+import 'l10n/app_localizations.dart';
 import 'providers/theme_provider.dart';
 import 'router.dart';
 
@@ -15,9 +18,7 @@ final localeProvider = StateNotifierProvider<LocaleNotifier, Locale>((ref) {
   return LocaleNotifier();
 });
 
-
 void main() {
-  
   MediaKit.ensureInitialized();
 
   runApp(
@@ -32,14 +33,18 @@ class SocialMediaApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
     final themeMode = ref.watch(themeProvider);
     final locale = ref.watch(localeProvider);
 
     return MaterialApp.router(
-      title: 'Omniversify',
+      title: AppLocalizations.of(context)?.app_title ?? 'Omniversify',
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        OmniversifyMaterialLocalizations.delegate,
+        OmniversifyWidgetsLocalizations.delegate,
+        OmniversifyCupertinoLocalizations.delegate,
+      ],
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: router,
       themeMode: themeMode,

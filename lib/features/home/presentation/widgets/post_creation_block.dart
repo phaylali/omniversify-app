@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../providers/post_cration_provider.dart';
 import '../../../../shared/widgets/responsive_card_wrapper.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PostCreationBlock extends ConsumerWidget {
   const PostCreationBlock({Key? key}) : super(key: key);
