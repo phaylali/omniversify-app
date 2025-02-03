@@ -74,6 +74,7 @@ class PostCard extends ConsumerWidget {
           formatTimestamp(post.createdAt),
           style: TextStyle(
             color: Colors.grey[600],
+            fontSize: 18
           ),
         ),
         Gap(10),
