@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../providers/posts_provider.dart'; // Import the Post model
+import 'package:social_media_app/widgets/post_card.dart';
+import '../providers/posts_provider.dart'; 
 
 class Feed extends ConsumerWidget {
   const Feed({super.key});
@@ -11,17 +11,11 @@ class Feed extends ConsumerWidget {
     final filteredPosts = ref.watch(filteredPostsProvider);
 
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: filteredPosts.length,
       itemBuilder: (context, index) {
         final post = filteredPosts[index];
-        return ListTile(
-          title: Text(post.content),
-          subtitle: Text(
-            post.attachments.isNotEmpty
-                ? post.attachments.map((a) => a.type).join(', ')
-                : 'No Attachments',
-          ),
-        );
+        return PostCard(post: post);
       },
     );
   }

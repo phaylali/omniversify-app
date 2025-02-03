@@ -142,13 +142,13 @@ Widget _buildAttachments(BuildContext context) {
         case 'image':
           return _buildImageAttachment(context, attachment as AttachmentImage);
         case 'video':
-          return _buildVideoAttachment(attachment as AttachmentVideo);
+          return _buildVideoAttachment(context, attachment as AttachmentVideo);
         case 'link':
-          return _buildLinkAttachment(attachment as AttachmentLink);
+          return _buildLinkAttachment(context, attachment as AttachmentLink);
         case 'book':
-          return _buildBookAttachment(attachment as AttachmentBook);
+          return _buildBookAttachment(context, attachment as AttachmentBook);
         case 'location':
-          return _buildLocationAttachment(attachment as AttachmentLocation);
+          return _buildLocationAttachment(context, attachment as AttachmentLocation);
         default:
           return const SizedBox.shrink();
       }
@@ -220,12 +220,12 @@ Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
 }
 
 
-  Widget _buildVideoAttachment(AttachmentVideo attachment) {
+  Widget _buildVideoAttachment(BuildContext context , AttachmentVideo attachment) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: GestureDetector(
         onTap: () {
-          // Handle video tap
+          attachment.handleAction(context);
         },
         child: Stack(
           children: [
@@ -269,11 +269,11 @@ Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
     );
   }
 
-  Widget _buildLinkAttachment(AttachmentLink attachment) {
+  Widget _buildLinkAttachment(BuildContext context , AttachmentLink attachment) {
     return Card(
       child: InkWell(
         onTap: () {
-          // Handle link tap
+          attachment.handleAction(context);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -296,11 +296,11 @@ Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
     );
   }
 
-  Widget _buildBookAttachment(AttachmentBook attachment) {
+  Widget _buildBookAttachment(BuildContext context , AttachmentBook attachment) {
     return Card(
       child: InkWell(
         onTap: () {
-          // Handle book tap
+          attachment.handleAction(context);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -351,11 +351,11 @@ Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
     );
   }
 
-  Widget _buildLocationAttachment(AttachmentLocation attachment) {
+  Widget _buildLocationAttachment(BuildContext context , AttachmentLocation attachment) {
     return Card(
       child: InkWell(
         onTap: () {
-          // Handle location tap
+         attachment.handleAction(context);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 @immutable
 abstract class Attachment {
@@ -11,6 +12,7 @@ abstract class Attachment {
 
   Map<String, dynamic> toJson();
   Future<void> handleAction(BuildContext context);
+  Future<void> inputAction(BuildContext context);
 }
 
 class AttachmentLink extends Attachment {
@@ -42,6 +44,16 @@ class AttachmentLink extends Attachment {
       );
   @override
   Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('link pressed');
+    }
+    launchUrl(
+      Uri.parse(url),
+    );
+  }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {
     // Open a dialog to input a link
     final linkController = TextEditingController();
     final result = await showDialog(
@@ -121,7 +133,14 @@ class AttachmentVideo extends Attachment {
             : null,
       );
   @override
-  Future<void> handleAction(BuildContext context) async {}
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('video pressed');
+    }
+  }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
 
 class AttachmentImage extends Attachment {
@@ -156,9 +175,16 @@ class AttachmentImage extends Attachment {
   @override
   Future<void> handleAction(BuildContext context) async {
     if (kDebugMode) {
+      print('image pressed');
+    }
+  }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {
+    if (kDebugMode) {
       print('book pressed');
     }
-        final picker = ImagePicker();
+    final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
@@ -206,6 +232,9 @@ class AttachmentBook extends Attachment {
       print('book pressed');
     }
   }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
 
 class AttachmentLocation extends Attachment {
@@ -247,6 +276,9 @@ class AttachmentLocation extends Attachment {
       print('location pressed');
     }
   }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
 
 class AttachmentGame extends Attachment {
@@ -283,6 +315,9 @@ class AttachmentGame extends Attachment {
       print('game pressed');
     }
   }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
 
 class AttachmentPoll extends Attachment {
@@ -315,6 +350,9 @@ class AttachmentPoll extends Attachment {
       print('poll pressed');
     }
   }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
 
 class AttachmentMusic extends Attachment {
@@ -352,6 +390,9 @@ class AttachmentMusic extends Attachment {
       print('music pressed');
     }
   }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
 
 class AttachmentMovie extends Attachment {
@@ -359,7 +400,6 @@ class AttachmentMovie extends Attachment {
   final String director;
   final int releaseYear;
   final String trailerUrl;
-
   const AttachmentMovie({
     required this.title,
     required this.director,
@@ -389,6 +429,9 @@ class AttachmentMovie extends Attachment {
       print('movie pressed');
     }
   }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
 
 class AttachmentSeries extends Attachment {
@@ -422,6 +465,9 @@ class AttachmentSeries extends Attachment {
       print('series pressed');
     }
   }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
 
 class AttachmentGif extends Attachment {
@@ -450,6 +496,9 @@ class AttachmentGif extends Attachment {
       print('gif pressed');
     }
   }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
 
 class AttachmentAudio extends Attachment {
@@ -483,6 +532,9 @@ class AttachmentAudio extends Attachment {
       print('audio pressed');
     }
   }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
 
 class AttachmentActivity extends Attachment {
@@ -512,4 +564,7 @@ class AttachmentActivity extends Attachment {
       print('activity pressed');
     }
   }
+
+  @override
+  Future<void> inputAction(BuildContext context) async {}
 }
