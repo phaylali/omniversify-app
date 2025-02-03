@@ -1,43 +1,102 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../providers/trending_topics_provider.dart';
-import '../widgets/app_drawer.dart';
+import 'package:social_media_app/widgets/feed.dart';
+import '../l10n/app_localizations.dart';
 import '../widgets/create_post_button.dart';
-import '../widgets/custom_app_bar.dart';
-import '../models/models.dart';
 import '../widgets/people_section.dart';
-import '../widgets/post_card.dart';
-import '../widgets/quote_card.dart';
-import '../widgets/repost_card.dart';
 import '../widgets/fab_menu.dart';
-import '../data/mock_data.dart';
-import 'package:go_router/go_router.dart';
-
+import '../widgets/tabs_drawer.dart';
 import '../widgets/trending_topics_card.dart';
 
-enum ContentType {
-  all,
-  posts,
-  reposts,
-  quotes,
-  images,
-  videos,
-  books,
-  links,
-  gifs,
-  polls,
-  series,
-  movies,
-  locations,
-  music,
-  audio,
-  games,
-  activities,
-  custom
-}
 
+
+class HomeScreen extends ConsumerWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+    return Scaffold(
+      body: Flex(
+        direction: Axis.vertical,
+        children: [
+          Flex(
+            direction: Axis.horizontal,
+            children: [
+              Expanded(
+                  child: Container(
+                color: Colors.red,
+                height: 40,
+              )),
+              Text(
+                AppLocalizations.of(context)!.app_title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                ),
+              ),
+              Expanded(
+                  child: Container(
+                color: Colors.green,
+                height: 40,
+              )),
+            ],
+          ),
+          Expanded(
+            child: Flex(
+              direction: Axis.horizontal,
+              children: [
+                Gap(2),
+                Flexible(
+                  flex: 1,
+                  child: Flex(
+                    direction: Axis.vertical,
+                    children: [
+                      Gap(2),
+                      CreatePostButton(),
+                      TabsNavigationDrawer(),
+                      Gap(4),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Column(
+                    children: [
+                      Expanded(child: Feed()),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: const TrendingTopicsCard(),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: const PeopleSection(),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FABMENU(
+        scaffoldKey: scaffoldKey,
+        icon1: Icons.wallet,
+        icon2: Icons.favorite,
+        icon3: Icons.home,
+        tooltip1: 'Button 1',
+        tooltip2: 'Button 2',
+        tooltip3: 'Button 3',
+      ),
+    );
+  }
+}
+/*
+/*
 class CustomTab {
   final String label;
 
@@ -52,12 +111,12 @@ class CustomTab {
       label: json['label'] as String,
     );
   }
-}
-
+}*/
+/*
 extension ContentTypeExtension on ContentType {
   String get label => toString().split('.').last;
 
-  IconData get icon {
+  /*IconData get icon {
     switch (this) {
       case ContentType.all:
         return Icons.dashboard;
@@ -96,23 +155,23 @@ extension ContentTypeExtension on ContentType {
       case ContentType.custom:
         return Icons.label_outline;
     }
-  }
+  }*/
 }
-
-class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({super.key});
+*/
+class HomeScreem extends ConsumerStatefulWidget {
+  const HomeScreem({super.key});
 
   @override
-  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreem> createState() => _HomeScreemState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen>
+class _HomeScreemState extends ConsumerState<HomeScreem>
     with TickerProviderStateMixin {
   static const String _activeTabsKey = 'active_tabs';
   static const String _customTabsKey = 'custom_tabs';
 
-  List<ContentType> _activeTabs = [ContentType.all];
-  Map<String, CustomTab> _customTabs = {};
+  //List<ContentType> _activeTabs = [ContentType.all];
+  //Map<String, CustomTab> _customTabs = {};
   late TabController _tabController;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -120,15 +179,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   void initState() {
     super.initState();
     // Initialize with default tabs first
-    _tabController = TabController(
+    /*_tabController = TabController(
       length: _activeTabs.length,
       vsync: this,
-    );
-    _tabController.addListener(() {
+    );*/
+    /*_tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         setState(() {});
       }
-    });
+    });*/
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(trendingTopicsProvider.notifier).fetchTrendingTopics();
     });
@@ -157,7 +216,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       );
     }
 
-    if (savedTabs != null && mounted) {
+    /*if (savedTabs != null && mounted) {
       final newTabs = savedTabs
           .map((tab) => ContentType.values.firstWhere(
                 (t) => t.label == tab,
@@ -187,10 +246,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           }
         });
       });
-    }
+    }*/
   }
 
-  Future<void> _saveTabSettings() async {
+  /*Future<void> _saveTabSettings() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(
       _activeTabsKey,
@@ -200,8 +259,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       _customTabsKey,
       _customTabs.entries.map((e) => '${e.key}|${e.value.label}').toList(),
     );
-  }
-
+  }*/
+  /*
   void _addCustomTab(String label) {
     if (label.isNotEmpty && !_customTabs.containsKey(label)) {
       setState(() {
@@ -216,9 +275,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         });
         _saveTabSettings();
       });
-    }
+    }*/
   }
-
+/*
   void _showTabManager() {
     showDialog(
       context: context,
@@ -442,8 +501,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       ),
     );
   }
-
-  List<dynamic> _getFilteredPosts(ContentType tab) {
+*/
+  /*List<dynamic> _getFilteredPosts(ContentType tab) {
     switch (tab) {
       case ContentType.all:
         return mockPosts;
@@ -456,9 +515,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       default:
         return mockPosts;
     }
-  }
+  }*/
 
-  Widget _buildPostsList(ContentType tab) {
+  /*Widget _buildPostsList(ContentType tab) {
     final filteredPosts = _getFilteredPosts(tab);
     return ListView.builder(
       itemCount: filteredPosts.length,
@@ -473,9 +532,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         }
       },
     );
-  }
+  }*/
 
-  List<Widget> _buildTabs() {
+  /*List<Widget> _buildTabs() {
     return _activeTabs.asMap().entries.map((entry) {
       final index = entry.key;
       final tab = entry.value;
@@ -499,26 +558,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         text: tab.label,
       );
     }).toList();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isWideScreen = screenWidth >= 1200;
+    //final screenWidth = MediaQuery.of(context).size.width;
+    //final isWideScreen = screenWidth >= 1200;
     
 
     return Scaffold(
       key: _scaffoldKey,
-      appBar: CustomAppBar(
+      /*appBar: CustomAppBar(
         tabController: _tabController,
-        tabs: _buildTabs(),
+        //tabs: _buildTabs(),
         onReorder: _showTabManager,
-      ),
+      ),*/
       drawer: AppDrawer(
         scaffoldKey: _scaffoldKey,
       ),
-      body: isWideScreen
-          ? Flex(
+      body: Flex(
               direction: Axis.horizontal,
               children: [
                 Gap(2),
@@ -528,50 +586,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     children: [
                       Gap(2),
                       CreatePostButton(),
-                      TrendingTopicsCard(),
+                      TabsNavigationDrawer(),
                       Gap(4),
                     ],
                   ),
                 ),
-                // Center section with fixed width and tabs
                 Flexible(
                   flex: 3,
                   child: Column(
                     children: [
                       Expanded(
-                        child: TabBarView(
-                          controller: _tabController,
-                          children: _activeTabs
-                              .map((tab) => _buildPostsList(tab))
-                              .toList(),
-                        ),
+                        child: Feed()
+                        
                       ),
                     ],
                   ),
                 ),
-                // Right section (people)
                 Flexible(
                   flex: 1,
-                  child: const PeopleSection(),
+                  child: const  TrendingTopicsCard(),
                 ),
                 Flexible(
                   flex: 1,
                   child: const PeopleSection(),
-                ),
-              ],
-            )
-          : Column(
-              children: [
-                Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children:
-                        _activeTabs.map((tab) => _buildPostsList(tab)).toList(),
-                  ),
                 ),
               ],
             ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FABMENU(
         scaffoldKey: _scaffoldKey,
         icon1: Icons.wallet,
@@ -582,7 +623,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         tooltip3: 'Button 3',
       ),
     );
-  }
-}
+  })
+*/
 
 

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import '../models/models.dart';
 
 class EmbeddedCard extends StatelessWidget {
-  final EmbeddedPost post;
+ final EmbeddedPost post;
 
   const EmbeddedCard({
     super.key,
@@ -112,4 +112,4 @@ class EmbeddedCard extends StatelessWidget {
       return 'now';
     }
   }
-}
+}*/
