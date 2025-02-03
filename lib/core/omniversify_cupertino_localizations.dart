@@ -31,7 +31,7 @@ class _OmniversifyCupertinoLocalizationsDelegate extends LocalizationsDelegate<C
   @override
   Future<CupertinoLocalizations> load(Locale locale) async {
     if (locale.languageCode == 'zgh') {
-      return GlobalCupertinoLocalizations.delegate.load(const Locale('ar'));
+      return GlobalCupertinoLocalizations.delegate.load(const Locale('en'));
     }
     return GlobalCupertinoLocalizations.delegate.load(locale);
   }

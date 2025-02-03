@@ -30,7 +30,7 @@ class _OmniversifyWidgetsLocalizationsDelegate extends LocalizationsDelegate<Wid
   @override
   Future<WidgetsLocalizations> load(Locale locale) async {
     if (locale.languageCode == 'zgh') {
-      return GlobalWidgetsLocalizations.delegate.load(const Locale('ar'));
+      return GlobalWidgetsLocalizations.delegate.load(const Locale('en'));
     }
     return GlobalWidgetsLocalizations.delegate.load(locale);
   }

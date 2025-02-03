@@ -14,6 +14,8 @@ import '../widgets/fab_menu.dart';
 import '../data/mock_data.dart';
 import 'package:go_router/go_router.dart';
 
+import '../widgets/trending_topics_card.dart';
+
 enum ContentType {
   all,
   posts,
@@ -541,51 +543,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           ),
                         ),
                       ),
-                      Flexible(
-                        child: Card(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8),
-                            child: Flex(
-                              direction: Axis.vertical,
-                              children: [
-                                Gap(10),
-                                Center(
-                                  child: Text(
-                                    'Trending Topics',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                Gap(16),
-                                Flexible(
-                                  child: SingleChildScrollView(
-                                    child: Wrap(
-                                      spacing: 8,
-                                      runSpacing: 8,
-                                      direction: Axis.horizontal,
-                                      children: trendingTopics.map((topic) {
-                                        return Chip(
-                                          label: Text(topic),
-                                          onDeleted: () {
-                                            ref
-                                                .read(trendingTopicsProvider
-                                                    .notifier)
-                                                .removeTopic(topic);
-                                          },
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      TrendingTopicsCard(),
+
                       Gap(4)
                     ],
                   ),

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import '../models/user_preview.dart';
 
 final peopleProvider = StateNotifierProvider<PeopleNotifier, List<UserPreview>>((ref) {
@@ -60,4 +63,20 @@ class PeopleNotifier extends StateNotifier<List<UserPreview>> {
       return user;
     }).toList();
   }
+  Future<void> fetchPeople() async {
+  final response = await http.get(Uri.parse('https://api.example.com/people'));
+  if (response.statusCode == 200) {
+    final List<dynamic> data = jsonDecode(response.body);
+    final List<UserPreview> people = data.map((person) {
+      return UserPreview(
+        name: person['name'],
+        username: person['username'],
+        avatarUrl: person['avatarUrl'],
+        bio: person['bio'],
+        isFollowing: person['isFollowing'] ?? false,
+      );
+    }).toList();
+    updatePeople(people);
+  }
+}
 }
