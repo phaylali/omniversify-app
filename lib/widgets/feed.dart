@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/models/models.dart';
+import '../models/models.dart';
 import 'post_card.dart';
 
 class Feed extends StatelessWidget {

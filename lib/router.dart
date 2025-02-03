@@ -1,11 +1,12 @@
 import 'package:go_router/go_router.dart';
-import 'package:social_media_app/pages/login.dart';
+import 'package:social_media_app/pages/login_screen.dart';
 
+import 'widgets/post_creation_screen.dart';
 import 'pages/doom_scroll_screen.dart';
 import 'pages/home_screen.dart';
 import 'pages/profile_screen.dart';
 import 'pages/settings_screen.dart';
-import 'pages/tv_page.dart';
+import 'pages/tv_screen.dart';
 
 final router = GoRouter(
   initialLocation: '/login',
@@ -33,6 +34,10 @@ final router = GoRouter(
     GoRoute(
       path: '/tv',
       builder: (context, state) => const TvPage(),
+    ),
+    GoRoute(
+      path: '/create-post',
+      builder: (context, state) => const PostCreationScreen(),
     ),
   ],
 );

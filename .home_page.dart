@@ -34,8 +34,8 @@ class _HomePageState extends State<HomePage>
     if (!isWideScreen) {
       return Scaffold(
         body: ListView(
-          children: const [
-            PostCreationBlock(),
+          children: [
+            //PostCreationBlock(),
             Feed(),
           ],
         ),

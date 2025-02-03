@@ -1,5 +1,5 @@
-import '../domain/models/models.dart';
-import '../domain/models/attachment_models.dart';
+import '../models/models.dart';
+import '../models/attachment_models.dart';
 
 final List<dynamic> mockPosts = [
   // Regular posts

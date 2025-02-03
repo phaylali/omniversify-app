@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/models/models.dart';
+import '../models/models.dart';
 
 class EmbeddedCard extends StatelessWidget {
   final EmbeddedPost post;

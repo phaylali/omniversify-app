@@ -29,6 +29,8 @@ dependencies:
   url_launcher:
   google_fonts: 
   flutter_hooks: 
+  image_picker:
+  gap:
 
 dev_dependencies:
   flutter_test:

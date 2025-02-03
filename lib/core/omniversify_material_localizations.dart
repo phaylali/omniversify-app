@@ -4,9 +4,8 @@ import 'package:intl/intl.dart' as intl;
 
 abstract class OmniversifyMaterialLocalizations extends GlobalMaterialLocalizations {
    OmniversifyMaterialLocalizations({
-    String localeName = 'zgh',
+    super.localeName = 'zgh',
   }) : super(
-    localeName: localeName,
     fullYearFormat: intl.DateFormat.y(localeName),
     compactDateFormat: intl.DateFormat.yMd(localeName),
     shortDateFormat: intl.DateFormat.yMMMd(localeName),

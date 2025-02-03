@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../domain/models/models.dart';
+import '../models/models.dart';
 import 'embedded_card.dart';
 import 'engagement_metrics.dart';
-import '../../../../shared/widgets/responsive_card_wrapper.dart';
+import 'responsive_card_wrapper.dart';
 
 class QuoteCard extends StatelessWidget {
   final Quote quote;

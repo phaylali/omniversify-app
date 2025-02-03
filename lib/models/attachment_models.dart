@@ -1,4 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 @immutable
 abstract class Attachment {
@@ -7,22 +10,87 @@ abstract class Attachment {
   const Attachment({required this.type});
 
   Map<String, dynamic> toJson();
+  Future<void> handleAction(BuildContext context);
 }
 
 class AttachmentLink extends Attachment {
   final String url;
-
-  const AttachmentLink({required this.url}) : super(type: 'link');
+  final String? thumbnailUrl;
+  final String? title;
+  final String? description;
+  const AttachmentLink({
+    required this.url,
+    this.thumbnailUrl,
+    this.title,
+    this.description,
+  }) : super(type: 'link');
 
   @override
   Map<String, dynamic> toJson() => {
         'type': type,
         'url': url,
+        'thumbnailUrl': thumbnailUrl,
+        'title': title,
+        'description': description,
       };
 
   factory AttachmentLink.fromJson(Map<String, dynamic> json) => AttachmentLink(
         url: json['url'] as String,
+        thumbnailUrl: json['thumbnailUrl'] as String?,
+        title: json['title'] as String?,
+        description: json['description'] as String?,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    // Open a dialog to input a link
+    final linkController = TextEditingController();
+    final result = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Enter Link'),
+        content: TextField(
+          controller: linkController,
+          decoration: const InputDecoration(hintText: 'https://example.com'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, linkController.text),
+            child: const Text('Submit'),
+          ),
+        ],
+      ),
+    );
+
+    if (result != null) {
+      // Fetch metadata from the link
+      // ignore: unused_local_variable
+      final metadata = await _fetchMetadata(result);
+      // Update the attachment with the fetched metadata
+      // (You can use a state management solution to update the UI)
+    }
+  }
+
+  Future<Map<String, dynamic>> _fetchMetadata(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        // Parse metadata (e.g., OpenGraph tags)
+        // This is a simplified example; you can use a package like `flutter_webview_plugin` or `html` for parsing.
+        return {
+          'thumbnailUrl': 'https://example.com/thumbnail.jpg',
+          'title': 'Example Website',
+          'description': 'This is an example website.',
+        };
+      }
+    } catch (e) {
+      debugPrint('Failed to fetch metadata: $e');
+    }
+    return {};
+  }
 }
 
 class AttachmentVideo extends Attachment {
@@ -52,6 +120,8 @@ class AttachmentVideo extends Attachment {
             ? Duration(seconds: json['duration'] as int)
             : null,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {}
 }
 
 class AttachmentImage extends Attachment {
@@ -83,6 +153,19 @@ class AttachmentImage extends Attachment {
         width: json['width'] as int?,
         height: json['height'] as int?,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('book pressed');
+    }
+        final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      // Update the attachment with the picked image
+      // (You can use a state management solution to update the UI)
+    }
+  }
 }
 
 class AttachmentBook extends Attachment {
@@ -117,6 +200,12 @@ class AttachmentBook extends Attachment {
         coverUrl: json['coverUrl'] as String?,
         description: json['description'] as String?,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('book pressed');
+    }
+  }
 }
 
 class AttachmentLocation extends Attachment {
@@ -152,6 +241,12 @@ class AttachmentLocation extends Attachment {
         address: json['address'] as String?,
         placeId: json['placeId'] as String?,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('location pressed');
+    }
+  }
 }
 
 class AttachmentGame extends Attachment {
@@ -182,6 +277,12 @@ class AttachmentGame extends Attachment {
         releaseDate: DateTime.parse(json['releaseDate'] as String),
         coverUrl: json['coverUrl'] as String,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('game pressed');
+    }
+  }
 }
 
 class AttachmentPoll extends Attachment {
@@ -208,6 +309,12 @@ class AttachmentPoll extends Attachment {
         options: List<String>.from(json['options']),
         votes: List<int>.from(json['votes']),
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('poll pressed');
+    }
+  }
 }
 
 class AttachmentMusic extends Attachment {
@@ -239,6 +346,12 @@ class AttachmentMusic extends Attachment {
         album: json['album'] as String,
         duration: Duration(seconds: json['duration'] as int),
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('music pressed');
+    }
+  }
 }
 
 class AttachmentMovie extends Attachment {
@@ -270,6 +383,12 @@ class AttachmentMovie extends Attachment {
         releaseYear: json['releaseYear'] as int,
         trailerUrl: json['trailerUrl'] as String,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('movie pressed');
+    }
+  }
 }
 
 class AttachmentSeries extends Attachment {
@@ -297,6 +416,12 @@ class AttachmentSeries extends Attachment {
         seasons: json['seasons'] as int,
         episodes: json['episodes'] as int,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('series pressed');
+    }
+  }
 }
 
 class AttachmentGif extends Attachment {
@@ -319,6 +444,12 @@ class AttachmentGif extends Attachment {
         url: json['url'] as String,
         description: json['description'] as String,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('gif pressed');
+    }
+  }
 }
 
 class AttachmentAudio extends Attachment {
@@ -346,6 +477,12 @@ class AttachmentAudio extends Attachment {
         duration: Duration(seconds: json['duration'] as int),
         title: json['title'] as String,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('audio pressed');
+    }
+  }
 }
 
 class AttachmentActivity extends Attachment {
@@ -369,4 +506,10 @@ class AttachmentActivity extends Attachment {
         activityType: json['activityType'] as String,
         description: json['description'] as String,
       );
+  @override
+  Future<void> handleAction(BuildContext context) async {
+    if (kDebugMode) {
+      print('activity pressed');
+    }
+  }
 }

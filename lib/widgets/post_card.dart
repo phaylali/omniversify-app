@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../domain/models/models.dart';
-import '../../domain/models/attachment_models.dart';
+import '../models/models.dart';
+import '../models/attachment_models.dart';
 import 'engagement_metrics.dart';
 
 
 class PostCard extends StatefulWidget {
   final Post post;
 
-  const PostCard({Key? key, required this.post}) : super(key: key);
+  const PostCard({super.key, required this.post});
 
   @override
   State<PostCard> createState() => _PostCardState();

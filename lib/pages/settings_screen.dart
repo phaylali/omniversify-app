@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../l10n/app_localizations.dart';
 import '../main.dart';
-import '../shared/widgets/fab_menu.dart';
-import '../features/channel_model.dart';
+import '../widgets/fab_menu.dart';
+import '../models/channel_model.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});

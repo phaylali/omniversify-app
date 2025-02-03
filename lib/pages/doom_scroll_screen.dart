@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../l10n/app_localizations.dart';
-import '../shared/widgets/fab_menu.dart';
-import '../shared/widgets/app_drawer.dart';
+import '../widgets/fab_menu.dart';
+import '../widgets/app_drawer.dart';
 class DoomScrollScreen extends ConsumerStatefulWidget {
   const DoomScrollScreen({super.key});
 

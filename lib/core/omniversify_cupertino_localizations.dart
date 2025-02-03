@@ -4,9 +4,8 @@ import 'package:intl/intl.dart' as intl;
 
 abstract class OmniversifyCupertinoLocalizations extends GlobalCupertinoLocalizations {
   OmniversifyCupertinoLocalizations({
-    String localeName = 'zgh',
+    super.localeName = 'zgh',
   }) : super(
-  localeName: localeName,
   fullYearFormat: intl.DateFormat.y(localeName),
   dayFormat: intl.DateFormat.d(localeName),
   mediumDateFormat: intl.DateFormat.MMMEd(localeName),

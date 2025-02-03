@@ -29,7 +29,7 @@ void main() {
 }
 
 class SocialMediaApp extends ConsumerWidget {
-  const SocialMediaApp({Key? key}) : super(key: key);
+  const SocialMediaApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:social_media_app/features/home/presentation/widgets/post_creation_block.dart';
-import '../shared/widgets/app_drawer.dart';
-import '../shared/widgets/custom_app_bar.dart';
-import '../features/home/domain/models/models.dart';
-import '../features/home/presentation/widgets/people_section.dart';
-import '../features/home/presentation/widgets/post_card.dart';
-import '../features/home/presentation/widgets/quote_card.dart';
-import '../features/home/presentation/widgets/repost_card.dart';
-import '../shared/widgets/fab_menu.dart';
-import '../features/home/data/mock_data.dart';
+import '../providers/trending_topics_provider.dart';
+import '../widgets/app_drawer.dart';
+import '../widgets/custom_app_bar.dart';
+import '../models/models.dart';
+import '../widgets/people_section.dart';
+import '../widgets/post_card.dart';
+import '../widgets/quote_card.dart';
+import '../widgets/repost_card.dart';
+import '../widgets/fab_menu.dart';
+import '../data/mock_data.dart';
 import 'package:go_router/go_router.dart';
 
 enum ContentType {
@@ -124,6 +125,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       if (!_tabController.indexIsChanging) {
         setState(() {});
       }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(trendingTopicsProvider.notifier).fetchTrendingTopics();
     });
     // Load saved tabs
     _loadTabSettings();
@@ -498,6 +502,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isWideScreen = screenWidth >= 1200;
+    final trendingTopics = ref.watch(trendingTopicsProvider);
 
     return Scaffold(
       key: _scaffoldKey,
@@ -510,52 +515,84 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         scaffoldKey: _scaffoldKey,
       ),
       body: isWideScreen
-          ? Row(
+          ? Flex(
+              direction: Axis.horizontal,
               children: [
-                // Left section (hashtags)
-                SizedBox(
-                  width: screenWidth * 0.20,
-                  child: const Column(
+                Gap(2),
+                Flexible(
+                  flex: 1,
+                  child: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: PostCreationBlock(),
-                      ),
-                      Expanded(
-                        child: SizedBox.expand(
-                          child: Card(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 8.0),
-                            child: Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Trending Topics',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 16),
-                                  Text('#Flutter'),
-                                  Text('#Dart'),
-                                  Text('#OpenSource'),
-                                  Text('#WebDev'),
-                                  Text('#MobileApps'),
-                                ],
+                      Gap(2),
+                      SizedBox(
+                        height: 80,
+                        child: Card(
+                          child: InkWell(
+                            onTap: () {
+                              context.go('/create-post');
+                            },
+                            child: Center(
+                              child: const Text(
+                                'Create Post',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
                         ),
                       ),
+                      Flexible(
+                        child: Card(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8),
+                            child: Flex(
+                              direction: Axis.vertical,
+                              children: [
+                                Gap(10),
+                                Center(
+                                  child: Text(
+                                    'Trending Topics',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                Gap(16),
+                                Flexible(
+                                  child: SingleChildScrollView(
+                                    child: Wrap(
+                                      spacing: 8,
+                                      runSpacing: 8,
+                                      direction: Axis.horizontal,
+                                      children: trendingTopics.map((topic) {
+                                        return Chip(
+                                          label: Text(topic),
+                                          onDeleted: () {
+                                            ref
+                                                .read(trendingTopicsProvider
+                                                    .notifier)
+                                                .removeTopic(topic);
+                                          },
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Gap(4)
                     ],
                   ),
                 ),
                 // Center section with fixed width and tabs
-                SizedBox(
-                  width: screenWidth * 0.40,
+                Flexible(
+                  flex: 3,
                   child: Column(
                     children: [
                       Expanded(
@@ -570,8 +607,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   ),
                 ),
                 // Right section (people)
-                SizedBox(
-                  width: screenWidth * 0.20,
+                Flexible(
+                  flex: 1,
+                  child: const PeopleSection(),
+                ),
+                Flexible(
+                  flex: 1,
                   child: const PeopleSection(),
                 ),
               ],

@@ -6,7 +6,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import '../features/channel_model.dart';
+import '../models/channel_model.dart';
 
 class TvPage extends StatefulWidget {
   const TvPage({super.key});
