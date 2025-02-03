@@ -1,68 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:social_media_app/widgets/aura_meter.dart';
+import '../models/models.dart';
 import '../models/attachment_models.dart';
-import '../models/post.dart';
-import '../providers/post_provider.dart';
 import 'engagement_metrics.dart';
 
-class PostCard extends ConsumerWidget {
+
+class PostCard extends StatefulWidget {
   final Post post;
 
   const PostCard({super.key, required this.post});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final isExpanded = ref.watch(isExpandedProvider(post.id));
+  State<PostCard> createState() => _PostCardState();
+}
 
-    return Flex(direction: Axis.vertical,
-      children: [
-        Gap(2),
-        Card(
-          
-          child: Flex(
-            direction: Axis.vertical,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Gap(8),
-              _buildHeader(),
+class _PostCardState extends State<PostCard> {
+  late double _contentHeight = 0; // Initialize with a default value
+  bool _isExpanded = false;
+  final double _maxCollapsedHeight = 100.0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _measureContentHeight();
+    });
+  }
+
+  void _measureContentHeight() {
+    setState(() {
+      _contentHeight = context.size?.height ?? 0;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeader(),
+            const SizedBox(height: 8.0),
+            _buildContent(),
+            if (widget.post.attachments.isNotEmpty) ...[
               const SizedBox(height: 8.0),
-              _buildContent(context, ref, isExpanded),
-              if (post.attachments.isNotEmpty) ...[
-                const SizedBox(height: 8.0),
-                _buildAttachments(context),
-              ],
-              
-              _buildEngagementMetrics(),
-              Gap(8)
+              _buildAttachments(),
             ],
-          ),
+            const SizedBox(height: 8.0),
+            _buildEngagementMetrics(),
+            const SizedBox(height: 8.0),
+            //_buildAuraMeter(),
+          ],
         ),
-      ],
+      ),
     );
   }
 
   Widget _buildHeader() {
-    return Flex(direction: Axis.horizontal,
+    return Row(
       children: [
-        Gap(10),
         CircleAvatar(
-          backgroundImage: NetworkImage(post.author.avatarUrl ?? ''),
+          backgroundImage: NetworkImage(widget.post.author.avatarUrl ?? ''),
         ),
-        Gap(10),
+        const SizedBox(width: 8.0),
         Expanded(
-          child: Flex(
-            direction: Axis.vertical,
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                post.author.displayName ?? post.author.username,
+                widget.post.author.displayName ?? widget.post.author.username,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                '@${post.author.username}',
+                '@${widget.post.author.username}',
                 style: TextStyle(
                   color: Colors.grey[600],
                 ),
@@ -71,161 +87,156 @@ class PostCard extends ConsumerWidget {
           ),
         ),
         Text(
-          _formatTimestamp(post.createdAt),
+          _formatTimestamp(widget.post.createdAt),
           style: TextStyle(
             color: Colors.grey[600],
           ),
         ),
-        
-        Gap(10),
       ],
     );
   }
 
-  Widget _buildContent(BuildContext context, WidgetRef ref,bool isExpanded) {
-    return Flex(  direction: Axis.vertical,
+  Widget _buildContent() {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        
-        if (isExpanded)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(post.content,overflow: TextOverflow.fade,),
+        if (_contentHeight > _maxCollapsedHeight && !_isExpanded)
+          Stack(
+            children: [
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: _maxCollapsedHeight,
+                ),
+                child: Text(
+                  widget.post.content,
+                  overflow: TextOverflow.fade,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _isExpanded = true;
+                    });
+                  },
+                  child: const Text('Show More'),
+                ),
+              ),
+            ],
           )
         else
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              post.content,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        if (post.hashtags.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Wrap(
-              spacing: 4.0,
-              children: post.hashtags
-                  .map((tag) => GestureDetector(
-                        onTap: () {
-                          // Handle hashtag tap
-                        },
-                        child: Text(
-                          '#$tag',
-                          style: const TextStyle(
-                            color: Colors.blue,
-                          ),
+          Text(widget.post.content),
+        if (widget.post.hashtags.isNotEmpty)
+          Wrap(
+            spacing: 4.0,
+            children: widget.post.hashtags
+                .map((tag) => GestureDetector(
+                      onTap: () {
+                        // Handle hashtag tap
+                      },
+                      child: Text(
+                        '#$tag',
+                        style: const TextStyle(
+                          color: Colors.blue,
                         ),
-                      ))
-                  .toList(),
-            ),
-          ),
-        if (!isExpanded && post.content.length > 250)
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: TextButton(
-              onPressed: () {
-                ref.read(isExpandedProvider(post.id).notifier).toggle();
-              },
-              child: const Text('Show More'),
-            ),
+                      ),
+                    ))
+                .toList(),
           ),
       ],
     );
   }
 
-Widget _buildAttachments(BuildContext context) {
-  return Column(
-    children: post.attachments.map((attachment) {
-      switch (attachment.type) {
-        case 'image':
-          return _buildImageAttachment(context, attachment as AttachmentImage);
-        case 'video':
-          return _buildVideoAttachment(attachment as AttachmentVideo);
-        case 'link':
-          return _buildLinkAttachment(attachment as AttachmentLink);
-        case 'book':
-          return _buildBookAttachment(attachment as AttachmentBook);
-        case 'location':
-          return _buildLocationAttachment(attachment as AttachmentLocation);
-        default:
-          return const SizedBox.shrink();
-      }
-    }).toList(),
-  );
-}
+  Widget _buildAttachments() {
+    return Column(
+      children: widget.post.attachments.map((attachment) {
+        switch (attachment.type) {
+          case 'image':
+            return _buildImageAttachment(attachment as AttachmentImage);
+          case 'video':
+            return _buildVideoAttachment(attachment as AttachmentVideo);
+          case 'link':
+            return _buildLinkAttachment(attachment as AttachmentLink);
+          case 'book':
+            return _buildBookAttachment(attachment as AttachmentBook);
+          case 'location':
+            return _buildLocationAttachment(attachment as AttachmentLocation);
+          default:
+            return const SizedBox.shrink();
+        }
+      }).toList(),
+    );
+  }
 
-
-Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 2.0),
-    child: GestureDetector(
-      onTap: () {
-        showDialog(
-          context: context, // Use the passed context
-          builder: (context) => Dialog.fullscreen(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Container(
-                  color: Colors.black,
-                  child: InteractiveViewer(
-                    child: Image.network(
-                      attachment.url,
-                      fit: BoxFit.contain,
+  Widget _buildImageAttachment(AttachmentImage attachment) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: GestureDetector(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) => Dialog.fullscreen(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    color: Colors.black,
+                    child: InteractiveViewer(
+                      child: Image.network(
+                        attachment.url,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 30,
+                  Positioned(
+                    top: 16,
+                    right: 16,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      onPressed: () => context.pop(),
                     ),
-                    onPressed: () => Navigator.pop(context),
                   ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(
-              attachment.url,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-            if (attachment.caption != null)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  attachment.caption!,
-                  style: const TextStyle(fontStyle: FontStyle.italic),
-                ),
+                ],
               ),
-          ],
+            ),
+          );
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(
+                attachment.url,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              if (attachment.caption != null)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    attachment.caption!,
+                    style: const TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   Widget _buildVideoAttachment(AttachmentVideo attachment) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: GestureDetector(
         onTap: () {
-          // Handle video tap
         },
         child: Stack(
           children: [
@@ -273,7 +284,6 @@ Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
     return Card(
       child: InkWell(
         onTap: () {
-          // Handle link tap
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -300,7 +310,6 @@ Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
     return Card(
       child: InkWell(
         onTap: () {
-          // Handle book tap
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -355,7 +364,6 @@ Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
     return Card(
       child: InkWell(
         onTap: () {
-          // Handle location tap
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -390,12 +398,12 @@ Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
 
   Widget _buildEngagementMetrics() {
     return EngagementMetrics(
-      likes: post.likes,
-      dislikes: post.dislikes,
-      commentsCount: post.commentsCount,
-      sharesCount: post.sharesCount,
-      repostsCount: post.repostsCount,
-      quotesCount: post.quotesCount,
+      likes: widget.post.likes,
+      dislikes: widget.post.dislikes,
+      commentsCount: widget.post.commentsCount,
+      sharesCount: widget.post.sharesCount,
+      repostsCount: widget.post.repostsCount,
+      quotesCount: widget.post.quotesCount,
     );
   }
 

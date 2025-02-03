@@ -524,13 +524,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 Gap(2),
                 Flexible(
                   flex: 1,
-                  child: Column(
+                  child: Flex(direction: Axis.vertical,
                     children: [
                       Gap(2),
                       CreatePostButton(),
                       TrendingTopicsCard(),
-
-                      Gap(4)
+                      Gap(4),
                     ],
                   ),
                 ),
