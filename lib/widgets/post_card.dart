@@ -71,12 +71,11 @@ class PostCard extends ConsumerWidget {
           ),
         ),
         Text(
-          _formatTimestamp(post.createdAt),
+          formatTimestamp(post.createdAt),
           style: TextStyle(
             color: Colors.grey[600],
           ),
         ),
-        
         Gap(10),
       ],
     );
@@ -258,7 +257,7 @@ Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    _formatDuration(attachment.duration!),
+                    formatDuration(attachment.duration!),
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
@@ -399,28 +398,7 @@ Widget _buildImageAttachment(BuildContext context, AttachmentImage attachment) {
     );
   }
 
-  String _formatTimestamp(DateTime timestamp) {
-    final now = DateTime.now();
-    final difference = now.difference(timestamp);
 
-    if (difference.inSeconds < 60) {
-      return '${difference.inSeconds}s';
-    } else if (difference.inMinutes < 60) {
-      return '${difference.inMinutes}m';
-    } else if (difference.inHours < 24) {
-      return '${difference.inHours}h';
-    } else if (difference.inDays < 7) {
-      return '${difference.inDays}d';
-    } else {
-      return '${timestamp.day}/${timestamp.month}/${timestamp.year}';
-    }
-  }
 
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String hours = duration.inHours > 0 ? '${duration.inHours}:' : '';
-    String minutes = twoDigits(duration.inMinutes.remainder(60));
-    String seconds = twoDigits(duration.inSeconds.remainder(60));
-    return '$hours$minutes:$seconds';
-  }
+
 }
