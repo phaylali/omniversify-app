@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/trending_topics_provider.dart';
 import '../widgets/app_drawer.dart';
+import '../widgets/create_post_button.dart';
 import '../widgets/custom_app_bar.dart';
 import '../models/models.dart';
 import '../widgets/people_section.dart';
@@ -504,7 +505,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isWideScreen = screenWidth >= 1200;
-    final trendingTopics = ref.watch(trendingTopicsProvider);
+    
 
     return Scaffold(
       key: _scaffoldKey,
@@ -526,23 +527,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   child: Column(
                     children: [
                       Gap(2),
-                      SizedBox(
-                        height: 80,
-                        child: Card(
-                          child: InkWell(
-                            onTap: () {
-                              context.go('/create-post');
-                            },
-                            child: Center(
-                              child: const Text(
-                                'Create Post',
-                                style: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      CreatePostButton(),
                       TrendingTopicsCard(),
 
                       Gap(4)
@@ -600,3 +585,5 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     );
   }
 }
+
+
