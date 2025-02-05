@@ -93,7 +93,7 @@ final postsProvider = Provider<List<Post>>((ref) {
         AttachmentBook(
           id: '978-1416570189',
           url:
-              'https://www.goodreads.com/book/show/2231384.Mastering_the_Art_of_French_Cooking',
+              'https://www.goodreads.com/book/show/2231384.Mastering_the_Art_of_Arabic_Cooking',
           author: 'Julia Child',
           coverUrl: 'https://picsum.photos/120/180?random=5',
           description:
@@ -163,6 +163,36 @@ final postsProvider = Provider<List<Post>>((ref) {
           url: 'https://picsum.photos/500/300?random=7',
           caption: 'Abstract sunset in acrylics',
         ),
+        AttachmentBook(
+          id: '978-0714847030',
+          url: 'https://www.goodreads.com/book/show/1312330.The_Story_of_Art',
+          author: 'E.H. Gombrich',
+          coverUrl: 'https://picsum.photos/120/180?random=8',
+          description:
+              'One of the most famous and popular books on art ever written',
+        ),
+      ],
+      hashtags: const ['art', 'painting'],
+      likes: 300,
+      dislikes: 20,
+      commentsCount: 90,
+      sharesCount: 30,
+      repostsCount: 18,
+      quotesCount: 10,
+    ),
+    Post(
+      id: '6',
+      author: const UserInfo(
+        id: '6',
+        username: 'art_lover',
+        displayName: 'Art Lover',
+        avatarUrl: 'https://i.pravatar.cc/150?img=5',
+      ),
+      content:
+          'Just finished my latest painting! 🎨 Inspired by this amazing art history book #art #painting',
+      createdAt: DateTime.now().subtract(const Duration(hours: 6)),
+      attachments: const [
+        
         AttachmentBook(
           id: '978-0714847030',
           url: 'https://www.goodreads.com/book/show/1312330.The_Story_of_Art',

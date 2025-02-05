@@ -8,14 +8,14 @@ import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import '../models/channel_model.dart';
 
-class TvPage extends StatefulWidget {
-  const TvPage({super.key});
+class TvScreen extends StatefulWidget {
+  const TvScreen({super.key});
 
   @override
-  State<TvPage> createState() => _TvPageState();
+  State<TvScreen> createState() => _TvScreenState();
 }
 
-class _TvPageState extends State<TvPage> {
+class _TvScreenState extends State<TvScreen> {
   final Player _mainPlayer = Player();
   late final VideoController _mainController;
   List<Channel> _channels = [];

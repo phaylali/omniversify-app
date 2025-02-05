@@ -68,7 +68,8 @@ class FABMENU extends StatelessWidget {
               if (kDebugMode) {
                 print('Settings');
               }
-              scaffoldKey.currentState?.openDrawer();
+              //scaffoldKey.currentState?.openDrawer();
+              context.go('/settings');
             })
       ],
     );

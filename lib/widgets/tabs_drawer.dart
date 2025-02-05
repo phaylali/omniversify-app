@@ -23,6 +23,10 @@ class TabsNavigationDrawer extends ConsumerWidget {
                 child: Flex(direction: Axis.vertical, 
                 children: tabs.map((tab) {
                     return ListTile(
+                      leading: SizedBox(
+                        width: 28,
+                        child: tab.icon,
+                      ),
                       title: Text(tab.name),
                       selected: tabs.indexOf(tab) == selectedTabIndex,
                       onTap: () {

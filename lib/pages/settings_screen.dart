@@ -79,19 +79,19 @@ class SettingsPage extends ConsumerWidget {
                         items: [
                           DropdownMenuItem(
                             value: const Locale('en'),
-                            child: Text(AppLocalizations.of(context)!.english),
+                            child: Text('English'),
                           ),
                           DropdownMenuItem(
                             value: const Locale('ar'),
-                            child: Text(AppLocalizations.of(context)!.arabic),
+                            child: Text('العربية'),
                           ),
                           DropdownMenuItem(
                             value: const Locale('es'),
-                            child: Text(AppLocalizations.of(context)!.spanish),
+                            child: Text('Español'),
                           ),
                           DropdownMenuItem(
                             value: const Locale('zgh'),
-                            child: Text(AppLocalizations.of(context)!.tifinagh),
+                            child: Text('ⵜⵉⴼⵉⵏⴰⵖ'),
                           ),
                         ],
                         onChanged: (value) {

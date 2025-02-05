@@ -13,7 +13,7 @@ class CreatePostButton extends StatelessWidget {
       child: Card(
         child: InkWell(
           onTap: () {
-            context.go('/create-post');
+            context.go('/new_post');
           },
           child: Center(
             child: const Text(

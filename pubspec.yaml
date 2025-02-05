@@ -31,6 +31,8 @@ dependencies:
   flutter_hooks: 
   image_picker:
   gap:
+  iconify_flutter_plus:
+  flutter_svg:
 
 dev_dependencies:
   flutter_test:

@@ -33,10 +33,10 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/tv',
-      builder: (context, state) => const TvPage(),
+      builder: (context, state) => const TvScreen(),
     ),
     GoRoute(
-      path: '/create-post',
+      path: '/new_post',
       builder: (context, state) => const PostCreationScreen(),
     ),
   ],

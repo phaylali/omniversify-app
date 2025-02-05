@@ -56,7 +56,7 @@ class PostCreationScreen extends ConsumerWidget {
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
                   onChanged: (value) {
-                    context.go('/create-post');
+                    context.go('/new_post');
                   },
                 ),
               ),

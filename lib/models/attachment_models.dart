@@ -231,6 +231,9 @@ class AttachmentBook extends Attachment {
     if (kDebugMode) {
       print('book pressed');
     }
+    launchUrl(
+      Uri.parse(url),
+    );
   }
 
   @override
